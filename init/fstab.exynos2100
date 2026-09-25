@@ -8,6 +8,7 @@ system                                      /system             erofs     ro    
 system_ext                                  /system_ext         erofs     ro                                 wait,logical,first_stage_mount
 system_ext                                  /system_ext         ext4      ro                                 wait,logical,first_stage_mount
 vendor                                      /vendor             erofs     ro                                 wait,logical,first_stage_mount
+vendor_dlkm                                 /vendor_dlkm        erofs     ro                                 wait,logical,first_stage_mount
 product                                     /product            erofs     ro                                 wait,logical,first_stage_mount
 product                                     /product            ext4      ro                                 wait,logical,first_stage_mount
 odm                                         /odm                erofs     ro                                 wait,logical,first_stage_mount
