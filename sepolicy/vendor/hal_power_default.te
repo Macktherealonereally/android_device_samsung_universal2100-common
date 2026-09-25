@@ -5,3 +5,6 @@ allow hal_power_default sysfs_battery_writable:file rw_file_perms;
 
 # To get/set powerhal state property
 set_prop(hal_power_default, vendor_power_prop)
+
+# Thermal HAL (android.hardware.thermal.IThermal/default)
+hal_client_domain(hal_power_default, hal_thermal)
