@@ -46,14 +46,10 @@ blob_fixups: blob_fixups_user_type = {
         .remove_needed('libeden_gpu_boost_stub_vendor.edensdk.samsung.so')
         .add_needed('libc++_shared.so')
         .add_needed('libshim_eden.so'),
-    'vendor/lib64/libsec-ril.so': blob_fixup()
+    'vendor/lib64/libsec-ril-impl.so': blob_fixup()
         .replace_needed(
             'libprotobuf-cpp-full-21.7.so',
             'libprotobuf-cpp-full-21.12.so'
-        )
-        .sig_replace(
-            '80 0E 40 F9 E1 03 16 AA 82 0C 80 52 E3 03 15 AA',
-            '80 0E 40 F9 E1 03 16 AA 82 0C 80 52 03 00 80 D2'
         ),
     'vendor/lib64/libVendorSemTelephonyProps.so': blob_fixup()
         .binary_regex_replace(
