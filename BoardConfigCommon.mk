@@ -160,6 +160,13 @@ include device/lineage/sepolicy/exynos/sepolicy.mk
 
 BOARD_VENDOR_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy/vendor
 
+# IMS (ImsStack/ImsMedia) - see ims/ims.mk
+ifneq ($(wildcard packages/modules/ImsMedia/sepolicy/system_ext/private/imsmedia.te),)
+SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += \
+    packages/modules/ImsMedia/sepolicy/system_ext/private \
+    $(COMMON_PATH)/ims/sepolicy/system_ext/private
+endif
+
 ## Verified Boot
 BOARD_AVB_ENABLE := true
 BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3

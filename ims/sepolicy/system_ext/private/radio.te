@@ -1,0 +1,11 @@
+#
+# SPDX-FileCopyrightText: The LineageOS Project
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# ImsMediaService (phone UID, radio domain) reads cgroup state when it
+# raises the priority of its RTP/audio threads. The platform_app UDP socket
+# and scheduling_policy_service rules come from
+# packages/modules/ImsMedia/sepolicy/system_ext/private.
+# Same as hardware/lineage/generic-ims (lineage-24.0).
+r_dir_file(radio, cgroup)

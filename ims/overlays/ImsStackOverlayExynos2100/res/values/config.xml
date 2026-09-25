@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <!-- Bring-up gates (see packages/modules/ImsStack/README.md). Emergency calls keep
+         using CS/the modem until the emergency/fallback path has been validated. -->
+    <bool name="config_imsstack_emergency_mmtel_feature">false</bool>
+    <bool name="config_imsstack_rcs_feature">false</bool>
+
+    <!-- Unknown whether the Samsung IRadioData v2 HAL reports dedicated-bearer QoS.
+         If MO/MT calls stall waiting for preconditions/QoS, set this to false. -->
+    <bool name="config_imsstack_dedicated_bearer_qos_supported">true</bool>
+</resources>

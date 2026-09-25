@@ -321,6 +321,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.telephony.satellite.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.satellite.xml
 
+# IMS (VoLTE/VoWiFi) - only active when volte.xml is synced
+$(call inherit-product, $(COMMON_PATH)/ims/ims.mk)
+
 # ipsec_tunnels feature
 PRODUCT_PACKAGES += \
     android.software.ipsec_tunnels.prebuilt.xml

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <!-- Flag specifying whether VoLTE is available on device -->
+    <bool name="config_device_volte_available">true</bool>
+
+    <!-- Flag specifying whether WFC over IMS is available on device -->
+    <bool name="config_device_wfc_ims_available">true</bool>
+
+    <!-- Flag specifying whether VT is available on device (ImsMedia video is untested) -->
+    <bool name="config_device_vt_available">false</bool>
+
+    <!-- IMS voice runs on the AP (ImsMedia/AAudio), not on the CP voice path:
+         use MODE_IN_COMMUNICATION instead of MODE_IN_CALL for IMS calls. -->
+    <bool name="config_use_voip_mode_for_ims">true</bool>
+
+    <!-- System components allowed to receive un-sanitized ServiceState entries even if the
+         location toggle is off (needed for PANI / cell location in SIP headers). -->
+    <string-array name="config_serviceStateLocationAllowedPackages">
+        <item>com.android.imsstack</item>
+        <item>com.android.phone</item>
+    </string-array>
+</resources>
