@@ -1,0 +1,8 @@
+# hal_samsung_sysinput.te
+hal_attribute(samsung_sysinput)
+
+# Binder IPC from client to server, and callbacks back to the client
+binder_call(hal_samsung_sysinput_client, hal_samsung_sysinput_server)
+binder_call(hal_samsung_sysinput_server, hal_samsung_sysinput_client)
+
+hal_attribute_service(hal_samsung_sysinput, hal_samsung_sysinput_service)

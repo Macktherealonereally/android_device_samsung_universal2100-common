@@ -4,5 +4,6 @@ type jsqz_device, dev_type;
 type migov_device, dev_type;
 type m2m1shot_device, dev_type;
 type secmem_device, dev_type;
+type tspio_device, dev_type;
 type vts_fio_device, dev_type;
 type vendor_npu_device, dev_type;

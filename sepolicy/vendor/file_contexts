@@ -55,6 +55,9 @@
 # Soundtrigger
 /dev/vts_fio_dev                             u:object_r:vts_fio_device:s0
 
+# Touchscreen
+/dev/tspio                                   u:object_r:tspio_device:s0
+
 # ZRAM
 /dev/block/zram0                             u:object_r:swap_block_device:s0
 
@@ -112,5 +115,6 @@
 /(vendor|system/vendor)/bin/hw/android\.hardware\.secure_element-service\.nxp                      u:object_r:hal_secure_element_default_exec:s0
 /(vendor|system/vendor)/bin/hw/vendor\.lineage\.health-service\.samsung                            u:object_r:hal_lineage_health_default_exec:s0
 /(vendor|system/vendor)/bin/hw/vendor\.samsung_slsi\.hardware\.SbwcDecompService@1\.0-service      u:object_r:hal_sbwcdecomp_default_exec:s0
+/(vendor|system/vendor)/bin/hw/vendor\.samsung\.hardware\.sysinput-service                         u:object_r:hal_samsung_sysinput_default_exec:s0
 /(vendor|system/vendor)/bin/hw/vendor\.samsung_slsi\.hardware\.epic-service                        u:object_r:hal_vendor_epic_service_default_exec:s0
 /(vendor|system/vendor)/bin/hw/samsung\.hardware\.media\.c2-service                                u:object_r:mediacodec_exec:s0
