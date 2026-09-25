@@ -1,3 +1,12 @@
 allow charger_vendor device:dir r_file_perms;
 allow charger_vendor sysfs_battery:file r_file_perms;
 allow charger_vendor sysfs_battery_writable:file r_file_perms;
+
+# sys.boot_completed
+get_prop(charger_vendor, boot_status_prop)
+
+# Thermal HAL
+hal_client_domain(charger_vendor, hal_thermal)
+
+# /proc/last_kmsg is opened by init for the service ("file /proc/last_kmsg r")
+allow charger_vendor proc_last_kmsg:file { getattr read };
