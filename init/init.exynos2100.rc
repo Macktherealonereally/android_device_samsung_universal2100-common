@@ -3,6 +3,9 @@ on early-init
     mkdir /mnt/vendor/cpefs 0771 radio system
     mkdir /mnt/vendor/persist 0771 system system
 
+    # Load vendor_dlkm kernel modules (BOARD_VENDOR_KERNEL_MODULES_LOAD)
+    exec u:r:vendor_modprobe:s0 -- /vendor/bin/modprobe --all=/vendor_dlkm/lib/modules/modules.load
+
 on init
     # Reactivation Lock
     symlink /dev/block/platform/13100000.ufs/by-name/steady /dev/block/steady
