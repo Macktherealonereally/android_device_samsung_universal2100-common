@@ -8,3 +8,6 @@ allow hal_secure_element_default hal_nfc_service:service_manager find;
 allow hal_secure_element_default secure_element_device:chr_file rw_file_perms;
 
 set_prop(hal_secure_element_default, vendor_sehal_init_prop)
+
+# persist.vendor.nfc.*
+get_prop(hal_secure_element_default, vendor_persist_nfc_prop)
