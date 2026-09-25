@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!--
+     SPDX-FileCopyrightText: The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+
+     TESTING ONLY - carrier data for VoLTE/VoWiFi bring-up with a Lebara NL SIM.
+     Read by com.android.carrierconfig after its assets; filters are the SIM's
+     MCC/MNC. KPN is 204-08 (and 204-69); Google maps lebara_nl to 204-17, while
+     Lebara NL SIMs on KPN may report 204-08 - check gsm.sim.operator.numeric.
+-->
+<carrier_config_list>
+    <!-- KPN and MVNOs on KPN (Lebara NL, Simyo, ...) -->
+    <carrier_config mcc="204" mnc="08">
+        <!-- Service enablement (ImsStack's CarrierSettings deliberately leaves this to
+             CarrierConfig; AOSP CarrierConfig has no NL profiles on lineage-23.2). -->
+        <boolean name="carrier_volte_available_bool" value="true" />
+        <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="carrier_default_wfc_ims_enabled_bool" value="false" />
+        <!-- No XCAP ("ut") APN in LineageOS' APN database: keep SS on CS. -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+        <!-- KPN does not use SIP preconditions (Google kpn_nl); ImsStack's CarrierSettings
+             import skips QoS/precondition keys, so carry it here. -->
+        <boolean name="imsvoice.voice_qos_precondition_supported_bool" value="false" />
+        <!-- VoWiFi / ePDG (values from Google CarrierSettings kpn_nl v80000000010 and
+             stock HZC2 epdg_apns_conf.xml KPN_NL: AES-CBC-256, SHA2-256, MODP2048) -->
+        <string name="iwlan.epdg_static_address_string">epdg.epc.mnc008.mcc204.pub.3gppnetwork.org</string>
+        <int-array name="iwlan.epdg_address_priority_int_array" num="2">
+            <item value="0" />
+            <item value="1" />
+        </int-array>
+        <int-array name="iwlan.diffie_hellman_groups_int_array" num="1">
+            <item value="14" />
+        </int-array>
+        <int name="iwlan.ike_remote_id_type_int" value="11" />
+        <int name="iwlan.ike_rekey_soft_timer_sec_int" value="86400" />
+        <int name="iwlan.ike_rekey_hard_timer_in_sec" value="86500" />
+        <int name="iwlan.child_sa_rekey_soft_timer_sec_int" value="86400" />
+        <int name="iwlan.child_sa_rekey_hard_timer_sec_int" value="86500" />
+    </carrier_config>
+    <!-- KPN -->
+    <carrier_config mcc="204" mnc="69">
+        <!-- Service enablement (ImsStack's CarrierSettings deliberately leaves this to
+             CarrierConfig; AOSP CarrierConfig has no NL profiles on lineage-23.2). -->
+        <boolean name="carrier_volte_available_bool" value="true" />
+        <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="carrier_default_wfc_ims_enabled_bool" value="false" />
+        <!-- No XCAP ("ut") APN in LineageOS' APN database: keep SS on CS. -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+        <!-- KPN does not use SIP preconditions (Google kpn_nl); ImsStack's CarrierSettings
+             import skips QoS/precondition keys, so carry it here. -->
+        <boolean name="imsvoice.voice_qos_precondition_supported_bool" value="false" />
+        <!-- VoWiFi / ePDG (values from Google CarrierSettings kpn_nl v80000000010 and
+             stock HZC2 epdg_apns_conf.xml KPN_NL: AES-CBC-256, SHA2-256, MODP2048) -->
+        <string name="iwlan.epdg_static_address_string">epdg.epc.mnc008.mcc204.pub.3gppnetwork.org</string>
+        <int-array name="iwlan.epdg_address_priority_int_array" num="2">
+            <item value="0" />
+            <item value="1" />
+        </int-array>
+        <int-array name="iwlan.diffie_hellman_groups_int_array" num="1">
+            <item value="14" />
+        </int-array>
+        <int name="iwlan.ike_remote_id_type_int" value="11" />
+        <int name="iwlan.ike_rekey_soft_timer_sec_int" value="86400" />
+        <int name="iwlan.ike_rekey_hard_timer_in_sec" value="86500" />
+        <int name="iwlan.child_sa_rekey_soft_timer_sec_int" value="86400" />
+        <int name="iwlan.child_sa_rekey_hard_timer_sec_int" value="86500" />
+    </carrier_config>
+    <!-- Lebara NL (Google carrier list) -->
+    <carrier_config mcc="204" mnc="17">
+        <!-- Service enablement (ImsStack's CarrierSettings deliberately leaves this to
+             CarrierConfig; AOSP CarrierConfig has no NL profiles on lineage-23.2). -->
+        <boolean name="carrier_volte_available_bool" value="true" />
+        <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="carrier_default_wfc_ims_enabled_bool" value="false" />
+        <!-- No XCAP ("ut") APN in LineageOS' APN database: keep SS on CS. -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+        <!-- KPN does not use SIP preconditions (Google kpn_nl); ImsStack's CarrierSettings
+             import skips QoS/precondition keys, so carry it here. -->
+        <boolean name="imsvoice.voice_qos_precondition_supported_bool" value="false" />
+        <!-- VoWiFi / ePDG (values from Google CarrierSettings kpn_nl v80000000010 and
+             stock HZC2 epdg_apns_conf.xml KPN_NL: AES-CBC-256, SHA2-256, MODP2048) -->
+        <string name="iwlan.epdg_static_address_string">epdg.epc.mnc008.mcc204.pub.3gppnetwork.org</string>
+        <int-array name="iwlan.epdg_address_priority_int_array" num="2">
+            <item value="0" />
+            <item value="1" />
+        </int-array>
+        <int-array name="iwlan.diffie_hellman_groups_int_array" num="1">
+            <item value="14" />
+        </int-array>
+        <int name="iwlan.ike_remote_id_type_int" value="11" />
+        <int name="iwlan.ike_rekey_soft_timer_sec_int" value="86400" />
+        <int name="iwlan.ike_rekey_hard_timer_in_sec" value="86500" />
+        <int name="iwlan.child_sa_rekey_soft_timer_sec_int" value="86400" />
+        <int name="iwlan.child_sa_rekey_hard_timer_sec_int" value="86500" />
+    </carrier_config>
+</carrier_config_list>
