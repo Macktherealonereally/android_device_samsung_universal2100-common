@@ -1,0 +1,21 @@
+# hal_samsung_sysinput_default.te
+type hal_samsung_sysinput_default, domain;
+hal_server_domain(hal_samsung_sysinput_default, hal_samsung_sysinput)
+
+type hal_samsung_sysinput_default_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(hal_samsung_sysinput_default)
+
+binder_use(hal_samsung_sysinput_default)
+
+# Input devices
+allow hal_samsung_sysinput_default input_device:dir r_dir_perms;
+allow hal_samsung_sysinput_default input_device:chr_file rw_file_perms;
+
+# /dev/tspio
+allow hal_samsung_sysinput_default tspio_device:chr_file rw_file_perms;
+
+# /sys/class/sec (device enumeration) and the touchscreen nodes
+allow hal_samsung_sysinput_default sysfs:dir r_dir_perms;
+allow hal_samsung_sysinput_default sysfs_sec_touchscreen:dir r_dir_perms;
+allow hal_samsung_sysinput_default sysfs_sec_touchscreen:file r_file_perms;
+allow hal_samsung_sysinput_default sysfs_touchscreen_writable:file rw_file_perms;
