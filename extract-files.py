@@ -50,7 +50,11 @@ blob_fixups: blob_fixups_user_type = {
         .replace_needed(
             'libprotobuf-cpp-full-21.7.so',
             'libprotobuf-cpp-full-21.12.so'
-        ),
+        )
+        # Change fallback value of ro.build.version.oneui in SimManager (3 matches)
+        .sig_replace('00 E4 03 91 E1 03 1F 2A', '00 24 05 91 81 58 9D 52')
+        .sig_replace('00 E4 03 91 E1 03 1F 2A', '00 24 05 91 81 58 9D 52')
+        .sig_replace('00 E4 03 91 E1 03 1F 2A', '00 24 05 91 81 58 9D 52'),
     'vendor/lib64/libVendorSemTelephonyProps.so': blob_fixup()
         .binary_regex_replace(
             b'persist.ril.supportNrModefromCp',
