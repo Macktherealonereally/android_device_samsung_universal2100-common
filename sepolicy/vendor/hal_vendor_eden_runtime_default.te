@@ -1,0 +1,2 @@
+# gpu_mm_min_clock
+allow hal_vendor_eden_runtime_default sysfs_gpu:file w_file_perms;
