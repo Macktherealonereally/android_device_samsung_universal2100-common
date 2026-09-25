@@ -292,4 +292,15 @@
     <!-- Default value for fp screen off unlock toggle, it only works for the devices that support
          fp screen off unlock-->
     <bool name="config_screen_off_udfps_default_on">true</bool>
+
+    <!-- Optional IPsec algorithms enabled by this device. The device shipped with API 30, so
+         the algorithms made mandatory in API 31 must be declared explicitly. All are built
+         into the kernel (CRYPTO_XCBC, CRYPTO_CTR, CRYPTO_CMAC, CRYPTO_CHACHA20POLY1305).
+         Used by IKEv2/ESP for VoWiFi (IWLAN) and by IMS SIP IPsec. -->
+    <string-array name="config_optionalIpSecAlgorithms" translatable="false">
+        <item>xcbc(aes)</item>
+        <item>rfc3686(ctr(aes))</item>
+        <item>cmac(aes)</item>
+        <item>rfc7539esp(chacha20,poly1305)</item>
+    </string-array>
 </resources>
