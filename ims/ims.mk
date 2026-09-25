@@ -29,6 +29,7 @@ $(call soong_config_set_bool,imsstack_namespace,use_android16_telephony_compat,t
 
 # Overlays
 PRODUCT_PACKAGES += \
+    CarrierConfigOverlayImsNL \
     FrameworkResOverlayImsStack \
     ImsStackOverlayExynos2100 \
     TelephonyOverlayImsStack
