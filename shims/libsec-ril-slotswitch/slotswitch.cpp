@@ -47,6 +47,9 @@ namespace {
 constexpr char kRealLib[] = "/vendor/lib64/libsec-ril-impl.so";
 constexpr char kDoSetSlotMapping[] = "_ZN10SimManager16DoSetSlotMappingEP7Request";
 constexpr char kExecuteSlotSwitch[] = "_ZN10SimManager17ExecuteSlotSwitchEP7Requesti";
+// static SimManager* SimManager::mInstance[2] (16 bytes, one per RIL slot).
+constexpr char kSimManagerInstances[] = "_ZN10SimManager9mInstanceE";
+constexpr int kEsimSlot = 1;  // tsds2: the eUICC sits behind the second SIM interface
 
 // Offsets taken from both RILs (G991B HZC2 stock and A556EXXSABYI4).
 constexpr size_t kRequestDataOffset = 0x38;      // Request::mData
@@ -64,6 +67,7 @@ using ExecuteSlotSwitchFn = void (*)(void*, void*, int);
 
 DoSetSlotMappingFn gRealDoSetSlotMapping = nullptr;
 ExecuteSlotSwitchFn gExecuteSlotSwitch = nullptr;
+void** gSimManagers = nullptr;
 
 bool resolveReal() {
     if (gRealDoSetSlotMapping != nullptr && gExecuteSlotSwitch != nullptr) {
@@ -82,6 +86,7 @@ bool resolveReal() {
     gRealDoSetSlotMapping =
             reinterpret_cast<DoSetSlotMappingFn>(dlsym(handle, kDoSetSlotMapping));
     gExecuteSlotSwitch = reinterpret_cast<ExecuteSlotSwitchFn>(dlsym(handle, kExecuteSlotSwitch));
+    gSimManagers = reinterpret_cast<void**>(dlsym(handle, kSimManagerInstances));
     if (gRealDoSetSlotMapping == nullptr || gExecuteSlotSwitch == nullptr) {
         ALOGE("dlsym failed (DoSetSlotMapping=%p ExecuteSlotSwitch=%p)",
               reinterpret_cast<void*>(gRealDoSetSlotMapping),
@@ -166,7 +171,17 @@ extern "C" __attribute__((visibility("default"))) int _ZN10SimManager16DoSetSlot
 
     // Same as stock: remember the target, start the low-level control
     // sequence; OnSimLowLevelControlDone answers the request when done.
-    *at<int>(self, kSimManagerTargetOffset) = target;
-    gExecuteSlotSwitch(self, request, kActionStartSwitch);
+    // The modem applies the switch to the SIM interface of the RIL instance the
+    // command is sent on, so it must run on the second slot's SimManager.
+    void* mgr = (gSimManagers != nullptr) ? gSimManagers[kEsimSlot] : nullptr;
+    if (mgr == nullptr) {
+        ALOGE("SimManager instance for slot %d not found (table %p); refusing switch",
+              kEsimSlot, reinterpret_cast<void*>(gSimManagers));
+        return gRealDoSetSlotMapping(self, request);
+    }
+    ALOGI("using SimManager %p (slot field %d) instead of caller %p (slot field %d)", mgr,
+          *at<int>(mgr, kSimManagerSlotOffset), self, *at<int>(self, kSimManagerSlotOffset));
+    *at<int>(mgr, kSimManagerTargetOffset) = target;
+    gExecuteSlotSwitch(mgr, request, kActionStartSwitch);
     return 0;
 }
