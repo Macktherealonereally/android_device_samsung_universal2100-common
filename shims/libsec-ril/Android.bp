@@ -26,6 +26,8 @@ cc_library_shared {
     shared_libs: [
         "libdl",
         "liblog",
+        // DT_NEEDED so it is loaded (DF_1_GLOBAL) before the impl.
+        "libsec-ril-slotswitch",
     ],
     include_dirs: [
         "hardware/ril/include",

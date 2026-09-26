@@ -1,0 +1,26 @@
+//
+// SPDX-FileCopyrightText: The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Interposes SimManager::DoSetSlotMapping of libsec-ril-impl.so to restore
+// the S21 (tsds2) SIM2 <-> eSIM slot switch. Must be DF_1_GLOBAL (-z global)
+// and a DT_NEEDED of the libsec-ril shim so it is in the global group
+// before the impl is dlopen()ed and relocated.
+cc_library_shared {
+    name: "libsec-ril-slotswitch",
+    vendor: true,
+    compile_multilib: "64",
+    srcs: ["slotswitch.cpp"],
+    cflags: [
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-fvisibility=hidden",
+    ],
+    ldflags: ["-Wl,-z,global"],
+    shared_libs: [
+        "libdl",
+        "liblog",
+    ],
+}
