@@ -6,4 +6,8 @@
 runtime_resource_overlay {
     name: "CarrierConfigOverlayImsNL",
     vendor: true,
+    // vendor.xml filters are compared as strings (DefaultCarrierConfigService
+    // checkFilters). Without raw values aapt2 compiles mnc="08" to the integer 8,
+    // which never equals CarrierIdentifier.getMnc() "08".
+    aaptflags: ["--keep-raw-values"],
 }

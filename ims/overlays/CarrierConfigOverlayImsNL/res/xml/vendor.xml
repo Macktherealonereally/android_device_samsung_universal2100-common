@@ -7,6 +7,7 @@
      Read by com.android.carrierconfig after its assets; filters are the SIM's
      MCC/MNC. KPN is 204-08 (and 204-69); Google maps lebara_nl to 204-17, while
      Lebara NL SIMs on KPN may report 204-08 - check gsm.sim.operator.numeric.
+     Filter values must survive aapt2 as strings (see aaptflags in Android.bp).
 -->
 <carrier_config_list>
     <!-- KPN and MVNOs on KPN (Lebara NL, Simyo, ...) -->
