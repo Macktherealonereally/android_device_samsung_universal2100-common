@@ -304,3 +304,8 @@ firmware_directories /vendor/firmware/wifi/
 
 # Big Hammer
 /dev/wbrc        0660 bluetooth bluetooth
+
+# NFC / eSE (SN100U): the AOSP NXP secure element HAL runs as secure_element
+/dev/pn547                0660   nfc              nfc
+/dev/p61                  0660   secure_element   secure_element
+/dev/p3                   0660   secure_element   secure_element
