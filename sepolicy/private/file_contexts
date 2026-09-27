@@ -1,0 +1,4 @@
+# NFC service (com.android.nfc, domain nfc) data: event log, params.
+# AOSP leaves /data/nfc unlabeled (system_data_file), so NfcEventLog
+# cannot write /data/nfc/event_log.binpb.
+/data/nfc(/.*)?                                 u:object_r:nfc_data_file:s0
