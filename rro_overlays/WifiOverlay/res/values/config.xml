@@ -30,6 +30,13 @@
     <!-- Wifi driver supports IEEE80211AC for softap -->
     <bool translatable="false" name="config_wifi_softap_ieee80211ac_supported">true</bool>
 
+    <!-- Wifi driver supports WPA3 SAE for softap. The BCM4375 dongle runs SAE itself
+         ("sae" firmware feature); hostapd hands it the password with
+         BRCM_VENDOR_SCMD_BCM_PSK and takes the PMK from BRCM_VENDOR_EVENT_SAE_KEY.
+         Needs hostapd built with CONFIG_BRCM_SAE (board_wlan_bcmdhd_sae) including the
+         AP-side support. Same as stock (SoftapOverlayWpa3). -->
+    <bool translatable="false" name="config_wifi_softap_sae_supported">true</bool>
+
     <!-- Enable ACS (auto channel selection) for softap -->
     <bool translatable="false" name="config_wifi_softap_acs_supported">false</bool>
 
