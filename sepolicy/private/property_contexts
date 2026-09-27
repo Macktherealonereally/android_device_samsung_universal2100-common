@@ -1,0 +1,5 @@
+# Samsung RIL (tsds2 eSIM slot switch) persists the SIM2 <-> eSIM selection
+# here; stock labels persist.ril.* radio_prop, which rild (hal_telephony_server)
+# may set. Unlabelled it falls to default_prop, the set is denied and the
+# selection is lost on every reboot.
+persist.ril.esim.           u:object_r:radio_prop:s0

@@ -159,6 +159,7 @@ include device/samsung_slsi/sepolicy/sepolicy.mk
 include device/lineage/sepolicy/exynos/sepolicy.mk
 
 BOARD_VENDOR_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy/vendor
+SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy/private
 
 # IMS (ImsStack/ImsMedia) - see ims/ims.mk
 ifneq ($(wildcard packages/modules/ImsMedia/sepolicy/system_ext/private/imsmedia.te),)
