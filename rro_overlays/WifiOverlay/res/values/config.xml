@@ -42,8 +42,13 @@
     <!-- True if the firmware supports p2p MAC randomization -->
     <bool name="config_wifi_p2p_mac_randomization_supported">true</bool>
 
-    <!-- Indicate the driver support NL80211_REG_CHANGED event. -->
-    <bool translatable="false" name="config_wifiDriverSupportedNl80211RegChangedEvent">true</bool>
+    <!-- bcmdhd_101_16 registers a self-managed wiphy with a static "99" regdomain
+         and never calls regulatory_set_wiphy_regd() when the country changes, so no
+         NL80211_CMD_WIPHY_REG_CHANGE carrying the real country is ever sent. With
+         this set to true the framework ignores the successful setCountryCode and
+         stays on "99" forever. The DRIVER COUNTRY private command is synchronous,
+         so trust its return value instead (AOSP default, same as stock). -->
+    <bool translatable="false" name="config_wifiDriverSupportedNl80211RegChangedEvent">false</bool>
 
     <!-- Wifi driver supports IEEE80211AX for softap -->
     <bool translatable="false" name="config_wifiSoftapIeee80211axSupported">true</bool>
