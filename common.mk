@@ -85,6 +85,7 @@ PRODUCT_PACKAGES += \
     libhwjpeg
 
 $(call soong_config_set_bool,samsungCameraVars,usage_64bit,true)
+$(call soong_config_set_bool,samsungCameraVars,high_fps_video,true)
 
 PRODUCT_PACKAGES += \
     android.hardware.camera.concurrent.prebuilt.xml \
