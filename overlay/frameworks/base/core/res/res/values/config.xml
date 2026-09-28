@@ -303,4 +303,11 @@
         <item>cmac(aes)</item>
         <item>rfc7539esp(chacha20,poly1305)</item>
     </string-array>
+
+    <!-- The eUICC behind physical slot 1 (tsds2 mux with SIM tray 2) is soldered in, but the
+         Samsung RIL reports it as removable. Without this, the platform and LPAs (OpenEUICC)
+         treat it as a removable eUICC card. -->
+    <integer-array name="non_removable_euicc_slots">
+        <item>1</item>
+    </integer-array>
 </resources>
