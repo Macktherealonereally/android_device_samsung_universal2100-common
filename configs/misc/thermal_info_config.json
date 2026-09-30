@@ -129,6 +129,39 @@
             ],
             "VrThreshold": "NAN",
             "Multiplier": 0.001
+        },
+        {
+            "Name": "VIRTUAL-SKIN",
+            "Type": "SKIN",
+            "VirtualSensor": true,
+            "Formula": "WEIGHTED_AVG",
+            "Combination": [
+                "battery"
+            ],
+            "Coefficient": [
+                "1.0"
+            ],
+            "HotThreshold": [
+                "NAN",
+                39.0,
+                43.0,
+                45.0,
+                47.0,
+                50.0,
+                "NAN"
+            ],
+            "HotHysteresis": [
+                0.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.0
+            ],
+            "VrThreshold": "NAN",
+            "Multiplier": 0.001,
+            "Monitor": false
         }
     ],
     "CoolingDevices": [
