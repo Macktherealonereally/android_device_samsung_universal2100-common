@@ -57,6 +57,9 @@ BOARD_KERNEL_SEPARATED_DTBO := true
 
 BOARD_KERNEL_IMAGE_NAME := Image
 BOARD_KERNEL_CMDLINE := loop.max_part=7
+# USB audio goes through the AOSP usbv2 HAL, so snd-usb-audio must stream
+# itself instead of handing the stream to the ABOX DSP.
+BOARD_KERNEL_CMDLINE += xhci_plat_hcd.usb_audio_offload=0
 BOARD_DTB_OFFSET := 0x0A000000
 BOARD_KERNEL_BASE := 0x80000000
 BOARD_KERNEL_OFFSET := 0x00080000
