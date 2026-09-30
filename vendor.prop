@@ -100,7 +100,7 @@ ro.vendor.hw.use_secure_encoder_only=1
 
 ## Codec2
 ro.vendor.gpu.dataspace=1
-vendor.debug.c2.sbwc.enable=true
+vendor.debug.c2.sbwc.enable=false
 debug.c2.use_dmabufheaps=1
 media.c2.dmabuf.padding=512
 debug.stagefright.c2inputsurface=-1
