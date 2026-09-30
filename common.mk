@@ -198,6 +198,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     vendor.lineage.health-service.samsung
 
+# sec_battery turns the buck off when charging is disabled above store_mode_charging_max
+# (or always with battery,store_mode_buckoff), so the device runs from the battery.
+$(call soong_config_set_bool,samsungHealthVars,charging_control_supports_bypass,false)
+
 # Keymaster
 PRODUCT_PACKAGES += \
     android.hardware.keymaster@4.0-service.samsung \
