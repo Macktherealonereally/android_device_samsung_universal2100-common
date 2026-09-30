@@ -201,6 +201,8 @@ PRODUCT_PACKAGES += \
 # sec_battery turns the buck off when charging is disabled above store_mode_charging_max
 # (or always with battery,store_mode_buckoff), so the device runs from the battery.
 $(call soong_config_set_bool,samsungHealthVars,charging_control_supports_bypass,false)
+# batt_full_capacity keeps the device on charger power at the limit
+$(call soong_config_set_bool,samsungHealthVars,charging_control_supports_limit,true)
 
 # Keymaster
 PRODUCT_PACKAGES += \
