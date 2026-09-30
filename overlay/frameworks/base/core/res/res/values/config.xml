@@ -110,8 +110,13 @@
     -->
     <bool name="config_powerDecoupleAutoSuspendModeFromDisplay">true</bool>
 
-    <!-- Allow automatic adjusting of the screen brightness while dozing in low power state. -->
-    <bool name="config_allowAutoBrightnessWhileDozing">true</bool>
+    <!-- Allow automatic adjusting of the screen brightness while dozing in low power state.
+         Keep this off: the AP suspends in DOZE_SUSPEND, so the light sensor's samples stop
+         arriving while the auto-brightness controller stays armed. On wake it keeps averaging
+         the stale (usually dark) lux over its 10 s long horizon and takes seconds to raise the
+         brightness. With this off the sensor is re-armed on wake and its first sample is used
+         immediately. -->
+    <bool name="config_allowAutoBrightnessWhileDozing">false</bool>
 
     <!-- Power Management: Specifies whether to decouple the interactive state of the
          device from the display on/off state.
@@ -160,7 +165,19 @@
     <!-- Screen brightness used to dim the screen while dozing in a very low power state.
          May be less than the minimum allowed brightness setting
          that can be set by the user. -->
-    <integer name="config_screenBrightnessDoze">32</integer>
+    <integer name="config_screenBrightnessDoze">11</integer>
+    <!-- The framework reads the float first and only falls back to the integer above when the
+         float is -2 (invalid). The AOSP default float is 0.0, which silently turned the AoD down
+         to the panel minimum. Use the same level as the integer above (11/255 = 10/254, ~38 nits
+         on this panel's map): AoD runs the panel in normal (not LPM) mode all night, so keep it
+         low for burn-in and battery. SystemUI only caps it at the brightness the screen had
+         when it went to sleep; it does not follow the room afterwards. -->
+    <item name="config_screenBrightnessDozeFloat" format="float" type="dimen">0.03937008</item>
+
+    <!-- Skip the brightness ramp when the display leaves AoD/doze for STATE_ON (and for the first
+         auto-brightness adjustment after that). Otherwise the brightness climbs from AoD level at the
+         panel's slow ramp rates. -->
+    <bool name="config_skipScreenOnBrightnessRamp">true</bool>
 
     <!-- Stability requirements in milliseconds for accepting a new brightness level.  This is used
          for debouncing the light sensor.  Different constants are used to debounce the light sensor
