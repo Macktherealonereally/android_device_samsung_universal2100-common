@@ -3,8 +3,10 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// res/xml/vendor.xml is generated: edit ims/carrier_config/manual.xml or
+// policy.json and run ims/carrier_config/carrier_ims.py generate.
 runtime_resource_overlay {
-    name: "CarrierConfigOverlayImsNL",
+    name: "CarrierConfigOverlayIms",
     vendor: true,
     // vendor.xml filters are compared as strings (DefaultCarrierConfigService
     // checkFilters). Without raw values aapt2 compiles mnc="08" to the integer 8,

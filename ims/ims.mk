@@ -27,9 +27,10 @@ PRODUCT_PACKAGES += \
 # Android 16 QPR2 telephony API compatibility for the Android 17 ImsStack
 $(call soong_config_set_bool,imsstack_namespace,use_android16_telephony_compat,true)
 
-# Overlays
+# Overlays. CarrierConfigOverlayIms switches VoLTE on per carrier (generated,
+# see ims/carrier_config/README.md).
 PRODUCT_PACKAGES += \
-    CarrierConfigOverlayImsNL \
+    CarrierConfigOverlayIms \
     FrameworkResOverlayImsStack \
     ImsStackOverlayExynos2100 \
     TelephonyOverlayImsStack

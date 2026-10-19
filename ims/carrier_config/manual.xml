@@ -3,11 +3,20 @@
      SPDX-FileCopyrightText: The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 
-     TESTING ONLY - carrier data for VoLTE/VoWiFi bring-up with a Lebara NL SIM.
-     Read by com.android.carrierconfig after its assets; filters are the SIM's
-     MCC/MNC. KPN is 204-08 (and 204-69); Google maps lebara_nl to 204-17, while
-     Lebara NL SIMs on KPN may report 204-08 - check gsm.sim.operator.numeric.
-     Filter values must survive aapt2 as strings (see aaptflags in Android.bp).
+     Hand-verified carrier blocks for CarrierConfig (com.android.carrierconfig).
+     carrier_ims.py copies them verbatim to the top of
+     ims/overlays/CarrierConfigOverlayIms/res/xml/vendor.xml and generates no
+     block for their MCC/MNCs, so these carriers keep exactly this config.
+
+     Verified on the S21 (o1s) since 2026-09-26 with Lebara NL and Simyo on KPN:
+     VoLTE calls and SMS over IMS. VoWiFi values are from Google CarrierSettings
+     kpn_nl and stock HZC2 epdg_apns_conf.xml (KPN_NL). KPN is 204-08 (and 204-69);
+     Google maps lebara_nl to 204-17, while Lebara NL SIMs on KPN may report
+     204-08 - check gsm.sim.operator.numeric.
+
+     Every block must filter on mcc and mnc (strings, see aaptflags in the
+     overlay's Android.bp). Add a carrier here only after a real test on the
+     device, and say what was tested.
 -->
 <carrier_config_list>
     <!-- KPN and MVNOs on KPN (Lebara NL, Simyo, ...) -->

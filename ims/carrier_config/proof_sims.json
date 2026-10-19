@@ -1,0 +1,16 @@
+[
+  {"label": "KPN (MNO)", "mcc": "204", "mnc": "08", "spn": "KPN", "expect": "identical"},
+  {"label": "Lebara NL on KPN", "mcc": "204", "mnc": "08", "spn": "Lebara", "expect": "identical"},
+  {"label": "Simyo on KPN", "mcc": "204", "mnc": "08", "spn": "simyo", "expect": "identical"},
+  {"label": "KPN, no SPN", "mcc": "204", "mnc": "08", "expect": "identical"},
+  {"label": "KPN Lab", "mcc": "204", "mnc": "69", "expect": "identical"},
+  {"label": "Lebara NL (204-17)", "mcc": "204", "mnc": "17", "spn": "Lebara", "expect": "identical"},
+  {"label": "Odido", "mcc": "204", "mnc": "16", "spn": "Odido", "gid1": "4E4C", "expect": "changed"},
+  {"label": "Ben (Odido MVNO)", "mcc": "204", "mnc": "16", "spn": "Ben NL", "gid1": "5F", "expect": "changed"},
+  {"label": "Vodafone TR", "mcc": "286", "mnc": "02", "expect": "changed"},
+  {"label": "Telekom MK (SPN)", "mcc": "294", "mnc": "01", "spn": "Telekom.mk", "expect": "changed"},
+  {"label": "Telekom MK (no SPN)", "mcc": "294", "mnc": "01", "expect": "changed"},
+  {"label": "Turkcell (no IMS profile)", "mcc": "286", "mnc": "01", "expect": "identical"},
+  {"label": "Vodafone ES (VoLTE already on in AOSP CarrierConfig)", "mcc": "214", "mnc": "01", "spn": "vodafone", "expect": "changed"},
+  {"label": "Telekom DE (UT kept on CS)", "mcc": "262", "mnc": "01", "gid1": "01", "expect": "changed"}
+]

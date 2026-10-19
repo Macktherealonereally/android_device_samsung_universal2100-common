@@ -1,0 +1,5 @@
+{
+  "comment": "Inputs for carrier_ims.py generate. exclude_mcc: test networks. exclude_mccmnc: MCC/MNC -> reason, for carriers where generic VoLTE is known to misbehave.",
+  "exclude_mcc": ["000", "001", "999"],
+  "exclude_mccmnc": {}
+}
