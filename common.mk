@@ -307,6 +307,11 @@ PRODUCT_PACKAGES += \
     powerhint.json.exynos2100 \
     task_profiles.json.exynos2100
 
+# Performance profiles (Settings > Battery > Performance profile)
+PRODUCT_PACKAGES += \
+    perf-profile \
+    PerfProfiles
+
 # PowerShare
 PRODUCT_PACKAGES += \
     vendor.lineage.powershare-service.samsung

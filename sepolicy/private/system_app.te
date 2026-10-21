@@ -1,0 +1,2 @@
+# Performance profile (PerfProfiles app)
+set_prop(system_app, perf_profile_prop)

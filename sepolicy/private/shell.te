@@ -1,0 +1,2 @@
+# adb shell setprop persist.sys.perf_profile <0-3>
+set_prop(shell, perf_profile_prop)

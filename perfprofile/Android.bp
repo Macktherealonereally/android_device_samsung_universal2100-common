@@ -1,0 +1,43 @@
+//
+// Copyright (C) 2026 The LineageOS Project
+//
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Applies persist.sys.perf_profile to the power HAL (see helper/perf-profile.cpp)
+cc_binary {
+    name: "perf-profile",
+    vendor: true,
+    srcs: ["helper/perf-profile.cpp"],
+    init_rc: ["helper/perf-profile.rc"],
+    shared_libs: [
+        "libbase",
+        "libbinder_ndk",
+        "liblog",
+        "//hardware/google/interfaces:pixel-power-ext-V1-ndk",
+    ],
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+}
+
+// Settings > Battery > Performance profile, plus a Quick Settings tile
+android_app {
+    name: "PerfProfiles",
+    defaults: ["SettingsLibDefaults"],
+
+    srcs: ["app/src/**/*.java"],
+    resource_dirs: ["app/res"],
+    manifest: "app/AndroidManifest.xml",
+
+    certificate: "platform",
+    platform_apis: true,
+    system_ext_specific: true,
+
+    optimize: {
+        optimize: true,
+        proguard_flags_files: ["app/proguard.flags"],
+        shrink_resources: true,
+    },
+}

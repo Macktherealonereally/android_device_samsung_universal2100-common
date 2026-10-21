@@ -3,3 +3,7 @@
 # may set. Unlabelled it falls to default_prop, the set is denied and the
 # selection is lost on every reboot.
 persist.ril.esim.           u:object_r:radio_prop:s0
+
+# Performance profile (0 power save, 1 balanced, 2 performance, 3 efficiency),
+# applied to the power HAL by /vendor/bin/perf-profile
+persist.sys.perf_profile    u:object_r:perf_profile_prop:s0 exact int

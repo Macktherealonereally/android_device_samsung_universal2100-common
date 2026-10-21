@@ -1,0 +1,11 @@
+# /vendor/bin/perf-profile: applies persist.sys.perf_profile to the power HAL
+type perf_profile, domain;
+type perf_profile_exec, exec_type, vendor_file_type, file_type;
+
+init_daemon_domain(perf_profile)
+
+binder_use(perf_profile)
+hal_client_domain(perf_profile, hal_power)
+
+get_prop(perf_profile, perf_profile_prop)
+set_prop(perf_profile, vendor_power_prop)

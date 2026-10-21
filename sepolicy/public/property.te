@@ -1,0 +1,3 @@
+# Performance profile (Settings > Battery): written by system_app and adb shell,
+# read by /vendor/bin/perf-profile
+system_restricted_prop(perf_profile_prop)

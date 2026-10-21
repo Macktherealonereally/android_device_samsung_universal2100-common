@@ -1,0 +1,13 @@
+service vendor.perf-profile /vendor/bin/perf-profile
+    user system
+    group system
+    oneshot
+    disabled
+
+# Apply the profile when the user changes it (and when persist props load at boot)
+on property:persist.sys.perf_profile=*
+    start vendor.perf-profile
+
+# Re-apply after every power HAL (re)start: its hints don't survive a restart
+on property:init.svc.vendor.power-hal-aidl=running
+    start vendor.perf-profile

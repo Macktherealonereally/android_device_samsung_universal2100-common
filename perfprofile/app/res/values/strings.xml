@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2026 The LineageOS Project
+
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <string name="perf_profile_title">Performance profile</string>
+    <string name="perf_profile_tile_label">Performance</string>
+
+    <string name="perf_profile_power_save">Power save</string>
+    <string name="perf_profile_power_save_summary">Big cores limited to 1.77 GHz (the Battery Saver limit), GPU to 494 MHz.</string>
+    <string name="perf_profile_efficiency">Efficiency</string>
+    <string name="perf_profile_efficiency_summary">Big cores limited to 2.18 GHz, small cores to 1.79 GHz, GPU to 585 MHz. Runs cooler for less power, with little everyday slowdown.</string>
+    <string name="perf_profile_balanced">Balanced</string>
+    <string name="perf_profile_balanced_summary">Default. No extra limits.</string>
+    <string name="perf_profile_performance">Performance</string>
+    <string name="perf_profile_performance_summary">Stronger boosts when you touch the screen and open apps. Uses more battery.</string>
+
+    <string name="perf_profile_footer">Battery Saver still limits the CPU to 1.77 GHz and turns the extra Performance boosts off. Touch and app-launch boosts never go above the limits of the selected profile.</string>
+</resources>
