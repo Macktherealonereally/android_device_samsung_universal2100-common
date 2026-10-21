@@ -11,3 +11,8 @@ on property:persist.sys.perf_profile=*
 # Re-apply after every power HAL (re)start: its hints don't survive a restart
 on property:init.svc.vendor.power-hal-aidl=running
     start vendor.perf-profile
+
+# Safety net: persist props and the power HAL are both up by now, and a change
+# that arrived while the oneshot was still running is picked up here
+on property:sys.boot_completed=1
+    start vendor.perf-profile

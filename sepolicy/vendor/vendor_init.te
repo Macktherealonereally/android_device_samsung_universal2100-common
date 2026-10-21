@@ -15,6 +15,9 @@ allow vendor_init cpdebug_efs_file:lnk_file getattr;
 allow vendor_init ssm_efs_file:file getattr;
 
 get_prop(vendor_init, vts_status_prop)
+# perf-profile.rc triggers on persist.sys.perf_profile; init drops vendor
+# triggers on properties vendor_init can't read ("unexported property trigger")
+get_prop(vendor_init, perf_profile_prop)
 set_prop(vendor_init, vendor_cbd_prop)
 set_prop(vendor_init, vendor_hwc_prop)
 set_prop(vendor_init, vendor_sec_nfc_prop)

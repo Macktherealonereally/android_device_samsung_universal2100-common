@@ -119,3 +119,11 @@ min limits never exceed max limits in the kernel (the max wins). LOW_POWER
 (Battery Saver) keeps its 1768000 cap in every profile and masks the extra
 Performance boosts. GPUMaxFreq is only written while a capping profile is
 active (`ResetOnInit: false`), so in Balanced gpu_max_clock is left alone.
+
+Nothing may write `ufc/cpufreq_max_limit_strict`: while the ufc min limit is in a
+"strict" row, exynos-ufcc uses max(cpufreq_max_limit, cpufreq_max_limit_strict)
+as the max limit, which would lift the profile caps. Today only init chowns it.
+
+The power HAL (uid root, group system, no dac_override) must be able to write
+`/sys/kernel/gpu/gpu_max_clock` after boot: init.samsung.rc makes it
+system:system 0664 (like gpu_min_clock) at boot_completed.
