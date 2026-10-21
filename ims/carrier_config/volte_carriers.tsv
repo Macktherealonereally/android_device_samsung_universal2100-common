@@ -4,18 +4,18 @@
 202	01	-	google:telekom_gr	-	COSMOTE
 202	05	-	google:vodafone_gr	-	Vodafone
 202	10	-	google:nova_gr	-	Telestet
-202	21	-	google:cellmobile_gr	-	
+202	21	-	google:cellmobile_gr	-	-
 204	03	-	google:enreach_nl	-	Voiceworks NL
 204	04	-	google:vodafone_nl	-	1GLOBAL; 1Global; C Spire; C Spire-NL; CTC Telecom Inc; China Telecom; Hot Mobile; Jump; Lum; Sask Tel Mobility; Telecom26; U.S. Cellular; Verizon Wireless; Vodafone; Webbing
-204	07	-	google:tcl_nl	-	
+204	07	-	google:tcl_nl	-	-
 204	12	1644	aosp:carrier_config_carrierid_1644_KPNTelfort.xml	-	KPN Mobiel
 204	16	-	google:tmobile_nl	-	Ben; Odido; Simpel
-204	20	-	google:tmobile_nl	-	
+204	20	-	google:tmobile_nl	-	-
 206	01	-	google:proximus_be	-	EURO INFORMATION TELECOM; IIJmio; Proximus; Telenet; Telnyx; Virgin; Virgin Media Ireland
-206	03	-	google:citymesh_be	-	
+206	03	-	google:citymesh_be	-	-
 206	05	-	google:telenet_be	-	Telenet
 206	10	-	google:orange_be	-	Orange; Transatel
-206	13	-	google:citymesh_be	-	
+206	13	-	google:citymesh_be	-	-
 206	14	2524	aosp:carrier_config_carrierid_2524_Telavox.xml	-	Telavox
 206	20	-	google:base_be	-	BASE; Virgin
 206	28	-	google:bics_be	-	Bics
@@ -31,9 +31,9 @@
 208	20	-	google:bouygues_fr	-	Bouygues B2B; Bouygues Telecom
 208	21	-	google:bouygues_fr	-	Bouygues Telecom
 208	27	-	google:coriolis_fr	-	Coriolis
-208	32	-	google:orange5gdemo_fr;aosp:carrier_config_mccmnc_20832.xml	-	
-208	37	-	google:ipdirections_fr	-	
-208	85	-	google:orange5gdemo_fr;aosp:carrier_config_mccmnc_20885.xml	-	
+208	32	-	google:orange5gdemo_fr;aosp:carrier_config_mccmnc_20832.xml	-	-
+208	37	-	google:ipdirections_fr	-	-
+208	85	-	google:orange5gdemo_fr;aosp:carrier_config_mccmnc_20885.xml	-	-
 208	88	-	google:bouygues_fr	-	Bouygues Telecom
 213	03	-	google:andorratelecom_ad	-	Mobiland
 214	01	-	google:vodafone_es	-	Vodafone
@@ -42,12 +42,12 @@
 214	05	-	google:movistar_es	-	Digi Italy; Digi Spain; ION Mobile; Movistar; Telecable; Tuenti
 214	06	2661	aosp:carrier_config_carrierid_2661_Finetwork.xml	-	Finetwork
 214	07	-	google:movistar_es	-	Mettel; Movistar
-214	10	-	google:lobster_es	-	
+214	10	-	google:lobster_es	-	-
 214	19	2125	aosp:carrier_config_carrierid_2125_Simyo.xml	-	Simyo
 214	22	-	google:digimobil_es	-	Digi Spain
 214	38	34	aosp:carrier_config_carrierid_34_Movistar.xml	-	Movistar
 216	01	-	google:yettel_hu	-	Yettel
-216	03	-	google:digi_hu	-	
+216	03	-	google:digi_hu	-	-
 216	30	-	google:telekom_hu	-	Magyar Telekom
 216	70	-	google:vodafone_hu	-	Vodafone
 218	05	-	google:mtel_ba	-	MOBI'S (Mobilina Srpske)
@@ -75,7 +75,7 @@
 228	02	-	google:sunrise_ch	-	Sunrise
 228	03	-	google:salt_ch	-	Salt; Transatel
 228	12	1413	aosp:carrier_config_carrierid_1413_Sunrise-CH.xml	-	Sunrise
-228	69	-	google:mtel_ch	-	
+228	69	-	google:mtel_ch	-	-
 228	71	-	google:spusu_ch	-	Spusu CH
 228	74	-	google:netplus_ch	-	netplus.ch
 230	01	-	google:tmobile_cz	-	T-Mobile
@@ -87,20 +87,20 @@
 232	01	-	google:a1_at	-	A1
 232	02	-	google:a1_at	-	A1
 232	03	-	google:tmobile_at	-	Goodspeed; Magenta Telekom
-232	04	-	google:tmobile_at	-	
+232	04	-	google:tmobile_at	-	-
 232	05	-	google:h3_at	-	Drei
 232	07	-	google:tmobile_at	-	Magenta Telekom; tele.ring
 232	09	-	google:a1mpn_at	-	A1
 232	10	-	google:h3_at	-	Drei; Google Fi; Google Fi-3AT; U+264A; U+264A-3AT Operational; U+264A-3AT Provisioning
 232	11	-	google:bob_at	-	A1
 232	12	-	google:yesss_at	-	A1
-232	14	-	google:h3_at;aosp:carrier_config_mccmnc_23214.xml	-	
+232	14	-	google:h3_at;aosp:carrier_config_mccmnc_23214.xml	-	-
 232	17	-	google:spusu_at	-	HELP mobile AT; Spusu AT; Tchibo mobil AT
-232	20	-	google:mtel_at	-	
+232	20	-	google:mtel_at	-	-
 234	10	-	google:o2postpaid_gb	-	1GLOBAL; 1Global; Jump; Manx Telecom; O2; TalkTalk; Tesco; Travelfy; Webbing; giffgaff; o2prepaid_gb
 234	15	-	google:vodafone_gb	off:28	ASDA GB; Gigs; Lebara; Sainsbury's; TalkMobile; Vodafone; eSIM Go
-234	20	-	google:h3_gb	off:1505	Google Fi; Google Fi-3UK; Smarty; Superdrug; Three Mobile; iD Mobile
-234	27	-	google:tcl_gb	-	
+234	20	-	google:h3_gb	off:1505,off:2140,off:2141,off:2425	Google Fi; Google Fi-3UK; Smarty; Superdrug; Three Mobile; iD Mobile
+234	27	-	google:tcl_gb	-	-
 234	30	-	google:ee_gb	off:2,off:2101,off:2103	BT; BT Business; BT One Phone; EE; Lycamobile; Virgin
 234	31	718	aosp:carrier_config_carrierid_718_EE.xml	-	EE
 234	32	718	aosp:carrier_config_carrierid_718_EE.xml	-	EE
@@ -134,7 +134,7 @@
 240	12	2405	aosp:carrier_config_carrierid_2405_Lycamobile.xml	-	Lycamobile
 240	24	1696	aosp:carrier_config_carrierid_1696_Tele2-SE.xml	-	Tele2/Comviq Sverige/Com Hem
 240	50	-	google:telavox_se	-	Telavox
-240	99	-	aosp:carrier_config_mccmnc_24099.xml	-	
+240	99	-	aosp:carrier_config_mccmnc_24099.xml	-	-
 242	01	-	google:telenor_no	-	Telenor; Ventelo
 242	02	-	google:telia_no	-	Chess; Telia
 242	05	-	google:onecall_no	-	OneCall
@@ -168,8 +168,8 @@
 262	02	-	google:vodafone_de	-	EWE; Vodafone
 262	03	-	google:eplus_de	-	1&1; O2; Voiceworks DE
 262	06	-	google:telekom_de	off:3	Telekom; congstar; fraenk
-262	07	-	google:o2_de	off:1454	1&1; Fonic Prepaid; O2; Tchibo; o2prepaid_de
-262	08	-	google:o2_de;aosp:carrier_config_mccmnc_26208.xml	-	
+262	07	-	google:o2_de	off:1454,off:2328,off:2330,off:2361,off:2536	1&1; Fonic Prepaid; O2; Tchibo; o2prepaid_de
+262	08	-	google:o2_de;aosp:carrier_config_mccmnc_26208.xml	-	-
 262	09	-	google:vodafonelab_de	-	Vodafone Lab
 262	10	1455	aosp:carrier_config_carrierid_1455_Arcor-AG-&-Co.xml	-	Arcor AG & Co.
 262	11	1454	aosp:carrier_config_carrierid_1454_o2.xml	off	O2
@@ -179,13 +179,13 @@
 262	15	1460	aosp:carrier_config_carrierid_1460_Airdata-AG.xml	-	Airdata AG
 262	20	-	google:enreach_de	-	Voiceworks DE
 262	21	-	google:spusu_de	-	Spusu DE
-262	22	-	google:sipgate_de	-	
+262	22	-	google:sipgate_de	-	-
 262	23	-	google:1and1_de	-	1&1
-262	25	-	google:mtel_de	-	
+262	25	-	google:mtel_de	-	-
 262	76	1461	aosp:carrier_config_carrierid_1461_Siemens-AG-ICMNPGUSTA.xml	-	Siemens AG, ICMNPGUSTA
 262	800	2673	aosp:carrier_config_carrierid_2673_Ericsson-IOT.xml	-	Ericsson Test
-262	830	-	aosp:carrier_config_mccmnc_262830.xml	-	
-262	840	-	aosp:carrier_config_mccmnc_262840.xml	-	
+262	830	-	aosp:carrier_config_mccmnc_262830.xml	-	-
+262	840	-	aosp:carrier_config_mccmnc_262840.xml	-	-
 266	01	-	google:gibtel_gi	-	Gibtelecom GSM
 268	01	-	google:vodafone_pt	-	Vodafone
 268	03	-	google:nos_pt	-	NOS
@@ -212,7 +212,7 @@
 284	03	-	google:vivacom_bg	-	VIVACOM
 284	05	-	google:yettel_bg	-	Yettel
 286	02	-	google:vodafone_tr	-	Vodafone
-286	22	-	google:selam_tr	-	
+286	22	-	google:selam_tr	-	-
 288	02	-	google:nema_fo	-	Kall GSM
 293	40	-	google:a1_si	-	SI Mobil
 293	41	-	google:telekom_si	-	Telekom Slovenije
@@ -251,9 +251,9 @@
 302	630	-	google:bell_ca	-	Bell Mobility; Lucky Mobile; PC mobile; Solo Mobile; Virgin Mobile Canada; pcmobile_prepaid_bell
 302	64	576	aosp:carrier_config_carrierid_576_Bell-Mobility.xml	off	Bell Mobility
 302	64	2021	aosp:carrier_config_carrierid_2021_Virgin-Mobile-Canada.xml	off	Virgin Mobile Canada
-302	64	2054	aosp:carrier_config_carrierid_2054_Solo-Mobile.xml	-	Solo Mobile
-302	64	2122	aosp:carrier_config_carrierid_2122_Lucky-Mobile.xml	-	Lucky Mobile
-302	64	10005	aosp:carrier_config_carrierid_10005_pcmobile_prepaid_bell.xml	-	pcmobile_prepaid_bell
+302	64	2054	aosp:carrier_config_carrierid_2054_Solo-Mobile.xml	off	Solo Mobile
+302	64	2122	aosp:carrier_config_carrierid_2122_Lucky-Mobile.xml	off	Lucky Mobile
+302	64	10005	aosp:carrier_config_carrierid_10005_pcmobile_prepaid_bell.xml	off	pcmobile_prepaid_bell
 302	640	-	google:bell_ca	-	Bell Mobility; Lucky Mobile; PC mobile; Solo Mobile; Virgin Mobile Canada; pcmobile_prepaid_bell
 302	654	580	aosp:carrier_config_carrierid_580_Sask-Tel-Mobility.xml	-	Sask Tel Mobility
 302	68	580	aosp:carrier_config_carrierid_580_Sask-Tel-Mobility.xml	-	Sask Tel Mobility
@@ -263,7 +263,7 @@
 302	690	10037	aosp:carrier_config_carrierid_10037_U+264A-Bell.xml	-	U+264A-Bell
 302	72	1403	aosp:carrier_config_carrierid_1403_Rogers.xml	off	Rogers
 302	720	-	google:rogers_ca	-	Chatr Mobile; Cityfone; Rogers; Rogers 5G; Tbaytel; Ztar Mobile
-302	721	-	google:rogerswpn_ca	-	
+302	721	-	google:rogerswpn_ca	-	-
 302	760	10034	aosp:carrier_config_carrierid_10034_U+264A-Telus.xml	-	U+264A-Telus
 302	780	580	aosp:carrier_config_carrierid_580_Sask-Tel-Mobility.xml	-	Sask Tel Mobility
 302	780	2638	aosp:carrier_config_carrierid_2638_Lum.xml	-	Lum
@@ -271,9 +271,9 @@
 302	86	1404	aosp:carrier_config_carrierid_1404_TELUS-Mobility.xml	off	TELUS Mobility
 302	86	2020	aosp:carrier_config_carrierid_2020_Koodo-Mobile.xml	off	Koodo Mobile
 308	01	-	google:spmtelecom_pm	-	St. Pierre-et-Miquelon Télécom
-308	03	-	google:spmtelecom_pm	-	
+308	03	-	google:spmtelecom_pm	-	-
 308	08	1667	aosp:carrier_config_carrierid_1667_St-Pierre-et-Miquelon-Télécom.xml	-	St. Pierre-et-Miquelon Télécom
-310	004	-	google:verizon_us	-	
+310	004	-	google:verizon_us	-	-
 310	012	1839	aosp:carrier_config_carrierid_1839_Verizon-Wireless.xml	-	Verizon Wireless
 310	023	1836	aosp:carrier_config_carrierid_1836_C-Spire.xml	-	C Spire
 310	023	10009	aosp:carrier_config_carrierid_10009_C-Spire-US.xml	-	C Spire-US
@@ -295,7 +295,7 @@
 310	26	1	aosp:carrier_config_carrierid_1_T-Mobile-US.xml	-	T-Mobile - US
 310	260	-	google:tmobile_us	-	Amaysim (MVNE2); Bright Spot (Leto); Consumer Cellular; Consumer Cellular TMO; DENT; GoSmart; Google Fi; Google Fi-TMO; IDT; Kajeet (Arterra); Kore; Lyca Mobile; M2M; MetroPCS; Nest; PWG/Cintex; Plintron; Qlink; Ready Wireless; Red Pocket; Red Pocket-TMO; Republic Wireless (MVNE2); Roam Mobility; Rock Island; Solavei; T-Mobile - US; Tello; Ting; TracFone; Tracfone-TMO; Twilio M2M; Ultra/Univision; Vodafone US; Wyless; iWireless
 310	270	-	google:tmobile_us	-	MetroPCS; T-Mobile - US
-310	280	-	google:att_us	off:1187	AT&T; AT&T 5G; AT&T 5G SA; AT&T Private; Airvoice; Consumer Cellular; Consumer Cellular ATT; Kore; Locus Telecom; MVNx #T; Red Pocket; Red Pocket-ATT; Telrite/Pure Talk; TracFone; Tracfone-ATT; Ztar
+310	280	-	google:att_us	off:1187,off:2575,off:2628	AT&T; AT&T 5G; AT&T 5G SA; AT&T Private; Airvoice; Consumer Cellular; Consumer Cellular ATT; Kore; Locus Telecom; MVNx #T; Red Pocket; Red Pocket-ATT; Telrite/Pure Talk; TracFone; Tracfone-ATT; Ztar
 310	300	-	google:tmobile_us	-	1GLOBAL; 1Global; MetroPCS; T-Mobile - US
 310	310	-	google:tmobile_us	-	MetroPCS; T-Mobile - US
 310	320	-	google:celluarone_us	-	Smith Bagley Inc, dba Cellular One
@@ -333,10 +333,10 @@
 310	690	-	google:limitless_us	-	Limitless Mobile
 310	800	-	google:tmobile_us	-	MetroPCS; T-Mobile - US
 310	890	1839	aosp:carrier_config_carrierid_1839_Verizon-Wireless.xml	-	Verizon Wireless
-310	950	-	google:att_us	off:1187	AT&T; AT&T 5G; AT&T 5G SA; AT&T Private; Airvoice; Consumer Cellular; Consumer Cellular ATT; Kore; MVNx #T; Red Pocket; Red Pocket-ATT; Telrite/Pure Talk; TracFone; Tracfone-ATT; Ztar
+310	950	-	google:att_us	off:1187,off:2575,off:2628	AT&T; AT&T 5G; AT&T 5G SA; AT&T Private; Airvoice; Consumer Cellular; Consumer Cellular ATT; Kore; MVNx #T; Red Pocket; Red Pocket-ATT; Telrite/Pure Talk; TracFone; Tracfone-ATT; Ztar
 310	960	2320	aosp:carrier_config_carrierid_2320_strata.xml	-	strata
 310	990	-	google:evolve_us	-	Evolve
-311	180	-	google:att_us	off:1187	AT&T; AT&T 5G; AT&T 5G SA; AT&T Private; Airvoice; Boost; Consumer Cellular; Consumer Cellular ATT; Gen Mobile; Home; Kore; MVNx #T; Project Genesis; Red Pocket; Red Pocket-ATT; Republic; Telrite/Pure Talk; Ting; TracFone; Tracfone-ATT; Ztar
+311	180	-	google:att_us	off:1187,off:2525,off:2526,off:2527,off:2534,off:2538,off:2539,off:2575,off:2606,off:2607,off:2608,off:2609,off:2610,off:2611,off:2628	AT&T; AT&T 5G; AT&T 5G SA; AT&T Private; Airvoice; Boost; Consumer Cellular; Consumer Cellular ATT; Gen Mobile; Home; Kore; MVNx #T; Project Genesis; Red Pocket; Red Pocket-ATT; Republic; Telrite/Pure Talk; Ting; TracFone; Tracfone-ATT; Ztar
 311	210	-	google:telnyx_us	-	Farmers Cellular Telephone; Telnyx
 311	220	-	google:uscc_us	-	U.S. Cellular
 311	221	-	google:uscc_us	-	U.S. Cellular
@@ -411,7 +411,7 @@
 311	850	-	google:cellcom_us;aosp:carrier_config_mccmnc_311850.xml	-	cellcom
 311	870	-	google:boost_us	-	Boost
 311	882	-	google:tmobile_us	-	Assurance Wireless; DENT; MetroPCS; T-Mobile - US
-312	180	-	google:limitless_us	-	
+312	180	-	google:limitless_us	-	-
 312	250	-	google:tmobile_us	-	Assurance Wireless; MetroPCS; T-Mobile - US
 312	290	-	google:strata_us	-	strata
 312	380	-	google:coppervalley_us	-	Copper Valley Wireless
@@ -456,7 +456,7 @@
 334	130	-	google:alestra_mx	-	Alestra Servicios Moviles
 334	160	-	google:izziatt_mx	-	IZZI
 340	01	-	google:orange_gp	-	Orange Caraïbe Mobiles
-346	07	-	google:paradisemobile_ky	-	
+346	07	-	google:paradisemobile_ky	-	-
 348	570	-	google:caribbean_vg	-	Caribbean Cellular Telephone, Boatphone Ltd.
 350	007	-	google:paradisemobile_bm	-	Paradise Mobile
 370	05	-	google:wind_do	-	Wind Telecom
@@ -593,23 +593,23 @@
 419	02	-	google:zain_kw	-	Zain
 419	03	-	google:ooredoo_kw	-	Ooredoo
 419	04	-	google:stc_kw	-	STC
-419	09	-	google:virgin_kw	-	
+419	09	-	google:virgin_kw	-	-
 420	01	-	google:stc_sa	-	STC
 420	03	-	google:mobily_sa	-	Mobily
 420	04	-	google:zain_sa	-	Zain Saudi Arabia
-420	06	-	google:lebara_sa	-	
+420	06	-	google:lebara_sa	-	-
 422	02	-	google:omantel_om	-	Omantel
 422	04	-	google:omantel_om	-	Omantel
 422	06	-	google:vodafone_om	-	Vodafone Oman
 424	02	-	google:etisalat_ae	-	Telecom26; Webbing; e& UAE
 424	03	-	google:du_ae	-	du
 425	01	-	google:partner_il	-	DENT; Partner Communications Co. Ltd.
-425	019	-	google:019mobile_il	-	
+425	019	-	google:019mobile_il	-	-
 425	02	-	google:cellcom_il	-	Cellcom Israel Ltd.
 425	03	-	google:pelephone_il	-	Pelephone Communications Ltd.
 425	07	-	google:hotmobile_il	-	Hot Mobile
 425	10	-	google:partner_il	-	Partner Communications Co. Ltd.
-425	19	-	google:019mobile_il	-	
+425	19	-	google:019mobile_il	-	-
 425	26	-	google:annatel_il	-	Annatel
 425	77	1991	aosp:carrier_config_carrierid_1991_Hot-Mobile.xml	-	Hot Mobile
 426	01	1372	aosp:carrier_config_carrierid_1372_Batelco.xml	-	Batelco
@@ -658,18 +658,18 @@
 502	11	-	google:unifi_my	-	unifi mobile
 502	12	-	google:maxis_my	-	Maxis/Hotlink
 502	13	-	google:celcom_my	-	Celcom
-502	142	-	google:maxis_my	-	
+502	142	-	google:maxis_my	-	-
 502	143	-	google:digi_my	-	Digi
 502	146	-	google:digi_my	-	Digi
-502	147	-	google:maxis_my	-	
+502	147	-	google:maxis_my	-	-
 502	152	-	google:yes_my	-	Yes 5G
 502	153	-	google:unifi_my	-	unifi mobile
 502	16	-	google:digi_my	-	Digi
 502	17	-	google:maxis_my	-	TimeCel
 502	18	-	google:umobile_my	-	U Mobile
 502	19	-	google:celcom_my	-	Celcom; Tune Talk
-505	01	-	google:telstra_au	off:1345	ALDI mobile; Belong; Boost; Everyday; Exetel; Konec; More; NuMobile; Southern; TANGERINE; Telechoice; Telstra; Woolworths; Your provider; mate.
-505	02	-	google:optus_au	off:30	Optus; Virgin
+505	01	-	google:telstra_au	off:1345,off:2129,off:2499,off:2500,off:2501,off:2502,off:2503,off:2540,off:2541,off:2542,off:2543,off:2544,off:2545,off:2572,off:2573	ALDI mobile; Belong; Boost; Everyday; Exetel; Konec; More; NuMobile; Southern; TANGERINE; Telechoice; Telstra; Woolworths; Your provider; mate.
+505	02	-	google:optus_au	off:30,off:2145	Optus; Virgin
 505	03	-	google:vodafone_au	off:15	Vodafone
 505	19	2549	aosp:carrier_config_carrierid_2549_Lycamobile.xml	-	Lycamobile
 505	39	-	google:telstra_au	off:1345	Telstra
@@ -690,7 +690,7 @@
 530	01	-	google:vodafone_nz	-	One NZ; Vodafone
 530	05	-	google:spark_nz	-	Skinny; Spark
 530	24	-	google:2degrees_nz	-	2degrees
-536	03	-	google:neotel_nr	-	
+536	03	-	google:neotel_nr	-	-
 540	01	-	google:ourtelekom_sb	-	BREEZE
 547	05	-	google:viti_pf	-	Viti
 548	01	-	google:vodafone_ck	-	Telecom Cook
@@ -701,7 +701,7 @@
 612	03	1421	aosp:carrier_config_carrierid_1421_Orange-Côte-d'Ivoire.xml	-	Orange Côte d'Ivoire
 618	07	2035	aosp:carrier_config_carrierid_2035_Orange.xml	-	Celcom
 619	08	-	google:one5g_sl	-	One5G
-639	10	-	google:jamil_ke	-	
+639	10	-	google:jamil_ke	-	-
 640	02	-	google:yas_tz	-	TIGO
 647	00	-	google:orange_re	-	Orange La Réunion
 647	04	-	google:zeop_re	-	Zeop_RE
@@ -722,6 +722,6 @@
 748	01	-	google:antel_uy	-	Ancel
 901	04	-	google:bbix_zz	-	Globalstar
 901	46	-	google:t26_zz	-	Telecom26
-901	54	-	google:teleena_zz	-	
+901	54	-	google:teleena_zz	-	-
 901	58	-	google:bics_be	-	Bics
-901	91	-	google:worldmobile_zz	-	
+901	91	-	google:worldmobile_zz	-	-

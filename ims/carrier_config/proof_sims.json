@@ -12,5 +12,7 @@
   {"label": "Telekom MK (no SPN)", "mcc": "294", "mnc": "01", "expect": "changed"},
   {"label": "Turkcell (no IMS profile)", "mcc": "286", "mnc": "01", "expect": "identical"},
   {"label": "Vodafone ES (VoLTE already on in AOSP CarrierConfig)", "mcc": "214", "mnc": "01", "spn": "vodafone", "expect": "changed"},
-  {"label": "Telekom DE (UT kept on CS)", "mcc": "262", "mnc": "01", "gid1": "01", "expect": "changed"}
+  {"label": "Telekom DE (UT kept on CS)", "mcc": "262", "mnc": "01", "gid1": "01", "expect": "changed"},
+  {"label": "Smarty UK (MVNO on Three's asset, UT kept on CS)", "mcc": "234", "mnc": "20", "gid1": "0309", "expect": "changed"},
+  {"label": "O2 DE (GID1, O2's asset, UT kept on CS)", "mcc": "262", "mnc": "07", "gid1": "010301FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", "expect": "changed"}
 ]

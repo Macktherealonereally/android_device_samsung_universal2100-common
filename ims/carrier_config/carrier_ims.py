@@ -26,6 +26,8 @@ same emulator proves what a release build really ships. Standard library only.
 from __future__ import annotations
 
 import argparse
+import codecs
+import functools
 import hashlib
 import io
 import json
@@ -113,6 +115,7 @@ def has_settings(elem) -> bool:
     return any(isinstance(c.tag, str) and c.get("name") for c in elem)
 
 
+@functools.lru_cache(maxsize=None)
 def parse_xml_text(text: str):
     return ET.fromstring(text.encode("utf-8") if isinstance(text, str) else text)
 
@@ -172,6 +175,7 @@ class Source:
         self.spec = spec
         self.dir = None
         self.zip = None
+        self._lists = {}
         if "!" in spec:  # outer.zip!inner/path.apk
             outer, inner = spec.split("!", 1)
             with zipfile.ZipFile(outer) as z:
@@ -186,8 +190,10 @@ class Source:
 
     def list(self, prefix: str = "") -> list[str]:
         if self.dir is not None:
-            base = self.dir / prefix if prefix else self.dir
-            return sorted(p.name for p in base.iterdir() if p.is_file())
+            if prefix not in self._lists:
+                base = self.dir / prefix if prefix else self.dir
+                self._lists[prefix] = sorted(p.name for p in base.iterdir() if p.is_file())
+            return self._lists[prefix]
         names = set()
         for n in self.zip.namelist():
             if n.startswith(prefix) and "/" not in n[len(prefix):]:
@@ -247,7 +253,9 @@ def parse_carrier_ids(path: pathlib.Path):
             for key, val in re.findall(r'^\s+(\w+): "(.*)"$', attr, re.M):
                 if key not in fields:
                     raise ValueError(f"unknown carrier attribute {key} (cid {cid})")
-                fields[key].append(val.encode().decode("unicode_escape"))
+                if "\\" in val:  # text-format escapes; keep UTF-8 text as it is
+                    val = codecs.decode(val.encode("latin-1", "backslashreplace"), "unicode_escape")
+                fields[key].append(val)
             # CarrierIdProvider stores the cartesian product of the lists.
             combos = [[]]
             for f in RULE_FIELDS:
@@ -514,17 +522,50 @@ def gather(top: pathlib.Path):
                 merged.setdefault(k, set()).add(v)
         cc_tuple_any[t] = merged
 
+    # Every (carrier id, specific carrier id) a SIM on an MCC/MNC can resolve to
+    # (CarrierResolver: a rule with a parent gives the parent as carrier id), and
+    # the MCC/MNC carrier id that DefaultCarrierConfigService falls back to.
     cids_on_tuple: dict[str, set[int]] = {}
+    pairs_on_tuple: dict[str, set[tuple[int, int]]] = {}
+    mccmnc_cid: dict[str, int] = {}
     for r in rules:
         if r.mccmnc:
             cids_on_tuple.setdefault(r.mccmnc, set()).add(r.cid)
             if r.parent != UNKNOWN_CARRIER_ID:
                 cids_on_tuple[r.mccmnc].add(r.parent)
+            pairs_on_tuple.setdefault(r.mccmnc, set()).add(
+                (r.parent, r.cid) if r.parent != UNKNOWN_CARRIER_ID else (r.cid, r.cid))
+            if r.mccmnc not in mccmnc_cid and all(v is None for v in (
+                    r.imsi, r.iccid, r.gid1, r.gid2, r.plmn, r.spn, r.priv, r.apn)):
+                mccmnc_cid[r.mccmnc] = r.cid  # = carrier_id_from_mccmnc()
 
     xcap = xcap_tuples(top / APN_DIR)
     return dict(names=names, rules=rules, manual=manual, skip=skip, tuple_src=tuple_src,
                 cid_src=cid_src, cc_cid=cc_cid, cc_tuple_any=cc_tuple_any,
-                cids_on_tuple=cids_on_tuple, xcap=xcap, policy=policy)
+                cids_on_tuple=cids_on_tuple, pairs_on_tuple=pairs_on_tuple,
+                mccmnc_cid=mccmnc_cid, cc_src=Source(str(cc)), base_cache={},
+                xcap=xcap, policy=policy)
+
+
+def pair_ids(g, tuple_, pair) -> dict:
+    return {"carrier_id": pair[0], "specific_carrier_id": pair[1],
+            "mccmnc_carrier_id": g["mccmnc_cid"].get(tuple_, UNKNOWN_CARRIER_ID)}
+
+
+def pair_config(g, tuple_, pair, vendor_root=None) -> dict:
+    """The bundle CarrierConfig returns for a plain SIM (no GID1/SPN) that resolves to
+    pair = (carrier id, specific carrier id) on tuple_. Without vendor_root: the AOSP
+    CarrierConfig assets alone, i.e. the asset that loadConfig() really falls back to
+    (specific id, carrier id, MCC/MNC carrier id, then the MCC/MNC file)."""
+    mcc, mnc = split_mccmnc(tuple_)
+    sim = {"mcc": mcc, "mnc": mnc}
+    if vendor_root is not None:
+        return load_config(g["cc_src"], vendor_root, sim, pair_ids(g, tuple_, pair))
+    key = (tuple_, pair)
+    if key not in g["base_cache"]:
+        g["base_cache"][key] = load_config(g["cc_src"], ET.Element("carrier_config_list"),
+                                           sim, pair_ids(g, tuple_, pair))
+    return g["base_cache"][key]
 
 
 def cc_value(bundle: dict, key: str):
@@ -532,24 +573,57 @@ def cc_value(bundle: dict, key: str):
     return v[1] if v else None
 
 
+def sim_extras(g, tuple_, base: dict) -> list:
+    """What one SIM (by the asset it really gets) needs on top of VoLTE=true."""
+    extras = []
+    if cc_value(base, KEY_VOLTE) == "false":
+        extras.append((KEY_VOLTE, "false"))  # keep an explicit "no VoLTE"
+    if tuple_ not in g["xcap"] and cc_value(base, KEY_UT) == "true" \
+            and cc_value(base, KEY_VOLTE) != "true":
+        # AOSP enables UT, no XCAP APN. Carriers that AOSP CarrierConfig already
+        # runs with VoLTE keep their UT setting.
+        extras.append((KEY_UT, "false"))
+    return extras
+
+
+def cid_filters(g, tuple_, pairs, wanted: dict) -> dict:
+    """Pick cid filters that give every SIM in `wanted` its extras without changing
+    another SIM. A cid filter matches the carrier id or the specific carrier id, so
+    try the carrier id first (one block for a carrier and its sub-brands), then the
+    specific id."""
+    def harmless(q, setting):
+        if setting in wanted.get(q, []):
+            return True
+        base = pair_config(g, tuple_, q)
+        # UT=false where AOSP leaves UT off: the platform default is false anyway.
+        return setting == (KEY_UT, "false") and cc_value(base, KEY_UT) != "true" \
+            and cc_value(base, KEY_VOLTE) != "true"
+
+    chosen = {}
+    for p in sorted(wanted):
+        for c in dict.fromkeys(p):
+            if all(harmless(q, s) for q in pairs if c in q for s in wanted[p]):
+                chosen.setdefault(c, [])
+                chosen[c] += [s for s in wanted[p] if s not in chosen[c]]
+                break
+        else:
+            raise SystemExit(f"{tuple_}: no cid filter fits carrier id {p[0]}/{p[1]}")
+    return {c: sorted(e, key=lambda s: s[0] != KEY_VOLTE) for c, e in chosen.items()}
+
+
 def build_blocks(g):
     blocks = []  # (sort key, attrs, comment, settings, inventory row)
     notes = []
 
-    def ut_cids(tuple_, cids):
-        """Carriers whose AOSP CarrierConfig enables UT, on an MCC/MNC without XCAP APN."""
-        # Carriers that AOSP CarrierConfig already runs with VoLTE keep their UT setting.
-        if tuple_ in g["xcap"]:
-            return []
-        return sorted(c for c in cids
-                      if cc_value(g["cc_cid"].get(c, {}), KEY_UT) == "true"
-                      and cc_value(g["cc_cid"].get(c, {}), KEY_VOLTE) != "true")
-
     def ut_tuple(tuple_):
+        """The MCC/MNC file (SIMs without a carrier id asset) enables UT, no XCAP APN."""
         values = g["cc_tuple_any"].get(tuple_, {})
         return tuple_ not in g["xcap"] and ("boolean", "true") in values.get(KEY_UT, set()) \
             and ("boolean", "true") not in values.get(KEY_VOLTE, set())
 
+    # UT and "explicit VoLTE off" are decided per SIM (carrier id), from the asset that
+    # CarrierConfig really falls back to: an MVNO without an asset of its own gets its
+    # MNO's asset through the MCC/MNC carrier id, UT included.
     for t in sorted(g["tuple_src"]):
         if g["skip"](t):
             continue
@@ -562,21 +636,19 @@ def build_blocks(g):
         ut = ut_tuple(t)
         if ut:
             settings.append((KEY_UT, "false"))
-        ut_off = ut_cids(t, cids)
+        pairs = g["pairs_on_tuple"].get(t, set())
+        wanted = {p: e for p in pairs if (e := sim_extras(g, t, pair_config(g, t, p)))}
+        extra_cids = cid_filters(g, t, pairs, wanted)
+        ut_off = sorted(c for c, e in extra_cids.items() if (KEY_UT, "false") in e)
         names = sorted({g["names"][c] for c in cids if c in g["names"]})
         blocks.append(((mcc, mnc, 0), {"mcc": mcc, "mnc": mnc},
                        ", ".join(g["tuple_src"][t]), settings,
                        (mcc, mnc, "-", ";".join(g["tuple_src"][t]),
                         "off" if ut else (",".join(f"off:{c}" for c in ut_off) or "-"),
                         "; ".join(names))))
-        for c in sorted(set(ut_off) | {c for c in cids
-                                       if cc_value(g["cc_cid"].get(c, {}), KEY_VOLTE) == "false"}):
-            extra = []
-            if cc_value(g["cc_cid"].get(c, {}), KEY_VOLTE) == "false":
-                extra.append((KEY_VOLTE, "false"))  # keep an explicit "no VoLTE"
+        for c, extra in sorted(extra_cids.items()):
+            if (KEY_VOLTE, "false") in extra:
                 notes.append(f"{t} cid {c}: VoLTE kept off (AOSP CarrierConfig)")
-            if c in ut_off:
-                extra.append((KEY_UT, "false"))
             blocks.append(((mcc, mnc, c), {"mcc": mcc, "mnc": mnc, "cid": str(c)},
                            f"{g['names'].get(c, c)}: AOSP CarrierConfig "
                            + ("disables VoLTE" if (KEY_VOLTE, "false") in extra
@@ -588,12 +660,14 @@ def build_blocks(g):
         for t in tuples:
             if g["skip"](t) or t in g["tuple_src"]:
                 continue
-            if cc_value(g["cc_cid"].get(c, {}), KEY_VOLTE) == "false":
+            # every SIM this mcc+mnc+cid block matches, by the asset it really gets
+            bases = [pair_config(g, t, p) for p in g["pairs_on_tuple"].get(t, set()) if c in p]
+            if any(cc_value(b, KEY_VOLTE) == "false" for b in bases):
                 notes.append(f"{t} cid {c}: AOSP CarrierConfig disables VoLTE - left alone")
                 continue
             mcc, mnc = split_mccmnc(t)
             settings = [(KEY_VOLTE, "true"), (KEY_PRECONDITION, "false")]
-            ut = ut_tuple(t) or bool(ut_cids(t, {c}))
+            ut = ut_tuple(t) or any((KEY_UT, "false") in sim_extras(g, t, b) for b in bases)
             if ut:
                 settings.append((KEY_UT, "false"))
             blocks.append(((mcc, mnc, c), {"mcc": mcc, "mnc": mnc, "cid": str(c)},
@@ -602,6 +676,32 @@ def build_blocks(g):
                             g["names"].get(c, ""))))
     blocks.sort(key=lambda b: (b[0][0], b[0][1], b[0][2]))
     return blocks, notes
+
+
+def audit(g, vendor_root) -> list[str]:
+    """Emulate CarrierConfig for every carrier id on every MCC/MNC (plus an unknown
+    carrier id), AOSP assets alone vs. assets + vendor_root, and list the SIMs that
+    break a rule of this tool."""
+    problems = []
+    for t in sorted(set(g["pairs_on_tuple"]) | set(g["tuple_src"])):
+        if t in g["manual"]:
+            continue  # hand-verified, applied verbatim
+        pairs = sorted(g["pairs_on_tuple"].get(t, set())) + [(UNKNOWN_CARRIER_ID,) * 2]
+        for p in pairs:
+            b = pair_config(g, t, p)
+            a = pair_config(g, t, p, vendor_root)
+            bv, av = cc_value(b, KEY_VOLTE), cc_value(a, KEY_VOLTE)
+            what = f"{t} cid {p[0]}/{p[1]} {g['names'].get(p[1], '')}".rstrip()
+            if bv == "true" and av != "true":
+                problems.append(f"VOLTE_LOST {what}")
+            if bv == "false" and av != "false":
+                problems.append(f"VOLTE_FORCED {what}: AOSP CarrierConfig says false")
+            if bv != "true" and av == "true" and cc_value(a, KEY_UT) == "true" \
+                    and t not in g["xcap"]:
+                problems.append(f"UT_ON_NO_XCAP {what}")
+            if bv == "true" and cc_value(b, KEY_UT) != cc_value(a, KEY_UT):
+                problems.append(f"UT_CHANGED {what}: AOSP CarrierConfig runs it with VoLTE")
+    return problems
 
 
 def xml_escape_comment(text: str) -> str:
@@ -656,7 +756,7 @@ def render_inventory(blocks) -> str:
              "# mcc\tmnc\tcarrier_id(- = whole MCC/MNC)\tsource\tss_over_ut\tcarrier names"]
     for *_, row in blocks:
         if row:
-            lines.append("\t".join(row))
+            lines.append("\t".join(f or "-" for f in row))
     return "\n".join(lines) + "\n"
 
 
@@ -666,13 +766,17 @@ def cmd_generate(args):
     blocks, notes = build_blocks(g)
     xml_text = render(g, blocks)
     tsv_text = render_inventory(blocks)
-    ET.fromstring(xml_text.encode())  # well-formed
+    problems = audit(g, ET.fromstring(xml_text.encode()))  # also: well-formed
     rows = [b[4] for b in blocks if b[4]]
     tuples = {(r[0], r[1]) for r in rows if r[2] == "-"}
     cid_rows = [r for r in rows if r[2] != "-"]
     summary = (f"manual MCC/MNCs: {len(g['manual'])}; generated: {len(tuples)} MCC/MNCs + "
                f"{len(cid_rows)} carrier-id blocks ({len(rows)} total); "
                f"UT kept on CS (rows): {sum(1 for r in rows if 'off' in r[4])}")
+    if problems:
+        print("\n".join(problems), file=sys.stderr)
+        print(f"FAILED: {len(problems)} SIMs break a rule (see README.md)", file=sys.stderr)
+        return 1
     if args.check:
         ok = OVERLAY_XML.read_text() == xml_text and INVENTORY.read_text() == tsv_text
         print(("up to date: " if ok else "OUT OF DATE: ") + summary)

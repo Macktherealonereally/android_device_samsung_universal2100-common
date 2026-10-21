@@ -70,17 +70,38 @@ contain the keys written here.
      KPN, the verified carrier, runs exactly like this. The device-wide switch
      `config_imsstack_dedicated_bearer_qos_supported=false` would say the same
      thing, but it also changes ImsStack's config for KPN, so it is not used yet.
-   - `carrier_supports_ss_over_ut_bool=false`, only in an extra mcc+mnc+cid block
-     for carriers whose AOSP CarrierConfig asset turns UT on while LineageOS'
-     APN database (`vendor/apn`) has no XCAP APN for that MCC/MNC. Supplementary
-     services then stay on CS, as they are today without IMS (the KPN reason).
+   - `carrier_supports_ss_over_ut_bool=false` where the AOSP CarrierConfig asset
+     turns UT on while LineageOS' APN database (`vendor/apn`) has no XCAP APN for
+     that MCC/MNC. Supplementary services then stay on CS, as they are today
+     without IMS (the KPN reason). This is decided per carrier id, from the asset
+     that SIM really gets (step 1 above): an MVNO with its own carrier id but no
+     asset of its own gets its MNO's asset through the MCC/MNC carrier id, UT
+     included (e.g. Smarty on Three UK, O2 DE GID1 SIMs, Telstra MVNOs). The UT
+     line goes into an extra mcc+mnc+cid block (or into the carrier's own cid
+     block), or into the MCC/MNC block when the `carrier_config_mccmnc_*.xml`
+     file turns UT on.
    - **No VoWiFi.** No CarrierSettings or AOSP CarrierConfig profile carries ePDG
      data. To add VoWiFi for a carrier, test it and put a full block into
      manual.xml.
 
    It never overrides an explicit `carrier_volte_available_bool=false` from AOSP
-   CarrierConfig (an extra cid block puts it back). `policy.json` leaves out test
-   networks (MCC 000, 001, 999) and can exclude an MCC/MNC with a reason.
+   CarrierConfig, again judged by the asset each carrier id really gets (an extra
+   cid block puts it back). `policy.json` leaves out test networks (MCC 000, 001,
+   999) and can exclude an MCC/MNC with a reason.
+
+   "Real IMS profile" means the profile has at least one setting. A few Google
+   profiles only carry UT (`imsss.*`) or SMS keys, and Google leaves VoLTE unset
+   for some MCC/MNCs and MVNO selectors (e.g. 450-0x KR, 311-870, 314-020,
+   314-200, travel/IoT eSIMs). None sets it to false. If one of them causes
+   reports, exclude it in `policy.json` (`exclude_mccmnc`).
+
+`generate` (and `generate --check`) also emulates CarrierConfig for every carrier
+id on every MCC/MNC (plus a SIM with an unknown carrier id), AOSP assets alone
+vs. assets + the new vendor.xml, and fails if a SIM breaks one of these rules:
+it loses VoLTE that AOSP gives it (`VOLTE_LOST`), gets VoLTE against an
+explicit AOSP `false` (`VOLTE_FORCED`), gets new VoLTE with UT on and no XCAP
+APN (`UT_ON_NO_XCAP`), or AOSP already runs it with VoLTE and its UT value
+changes (`UT_CHANGED`). The manual.xml MCC/MNCs are not checked.
 
 `volte_carriers.tsv` lists every generated block (MCC, MNC, carrier id, source
 profile, UT handling, carrier names from the carrier id database). Use it to
@@ -106,7 +127,9 @@ python3 ims/carrier_config/carrier_ims.py effective \
     --vendor ims/overlays/CarrierConfigOverlayIms/res/xml/vendor.xml \
     --mcc 286 --mnc 02
 
-# before/after proof for the SIMs in proof_sims.json ("expect" marks surprises)
+# before/after proof for the SIMs in proof_sims.json ("expect" marks surprises,
+# relative to the old KPN-only overlay); old-vendor.xml is the file to compare with:
+git show release:ims/overlays/CarrierConfigOverlayImsNL/res/xml/vendor.xml > old-vendor.xml
 python3 ims/carrier_config/carrier_ims.py diff --sims ims/carrier_config/proof_sims.json \
     --before-carrierconfig ../../../packages/apps/CarrierConfig/assets \
     --before-vendor old-vendor.xml \

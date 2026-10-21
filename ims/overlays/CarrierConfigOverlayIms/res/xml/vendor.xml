@@ -609,6 +609,18 @@
         <!-- Three Mobile: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
         <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
     </carrier_config>
+    <carrier_config mcc="234" mnc="20" cid="2140">
+        <!-- Smarty: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="234" mnc="20" cid="2141">
+        <!-- Superdrug: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="234" mnc="20" cid="2425">
+        <!-- iD Mobile: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
     <carrier_config mcc="234" mnc="27">
         <!-- google:tcl_gb -->
         <boolean name="carrier_volte_available_bool" value="true" />
@@ -992,6 +1004,22 @@
     </carrier_config>
     <carrier_config mcc="262" mnc="07" cid="1454">
         <!-- O2: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="262" mnc="07" cid="2328">
+        <!-- Fonic Prepaid: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="262" mnc="07" cid="2330">
+        <!-- Tchibo: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="262" mnc="07" cid="2361">
+        <!-- O2: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="262" mnc="07" cid="2536">
+        <!-- 1&1: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
         <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
     </carrier_config>
     <carrier_config mcc="262" mnc="08">
@@ -1413,16 +1441,19 @@
         <!-- aosp:carrier_config_carrierid_2054_Solo-Mobile.xml -->
         <boolean name="carrier_volte_available_bool" value="true" />
         <boolean name="imsvoice.voice_qos_precondition_supported_bool" value="false" />
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
     </carrier_config>
     <carrier_config mcc="302" mnc="64" cid="2122">
         <!-- aosp:carrier_config_carrierid_2122_Lucky-Mobile.xml -->
         <boolean name="carrier_volte_available_bool" value="true" />
         <boolean name="imsvoice.voice_qos_precondition_supported_bool" value="false" />
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
     </carrier_config>
     <carrier_config mcc="302" mnc="64" cid="10005">
         <!-- aosp:carrier_config_carrierid_10005_pcmobile_prepaid_bell.xml -->
         <boolean name="carrier_volte_available_bool" value="true" />
         <boolean name="imsvoice.voice_qos_precondition_supported_bool" value="false" />
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
     </carrier_config>
     <carrier_config mcc="302" mnc="640">
         <!-- google:bell_ca -->
@@ -1651,6 +1682,14 @@
         <!-- AT&T: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
         <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
     </carrier_config>
+    <carrier_config mcc="310" mnc="280" cid="2575">
+        <!-- MVNx #T: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="310" mnc="280" cid="2628">
+        <!-- AT&T Private: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
     <carrier_config mcc="310" mnc="300">
         <!-- google:tmobile_us -->
         <boolean name="carrier_volte_available_bool" value="true" />
@@ -1854,6 +1893,14 @@
         <!-- AT&T: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
         <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
     </carrier_config>
+    <carrier_config mcc="310" mnc="950" cid="2575">
+        <!-- MVNx #T: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="310" mnc="950" cid="2628">
+        <!-- AT&T Private: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
     <carrier_config mcc="310" mnc="960" cid="2320">
         <!-- aosp:carrier_config_carrierid_2320_strata.xml -->
         <boolean name="carrier_volte_available_bool" value="true" />
@@ -1871,6 +1918,62 @@
     </carrier_config>
     <carrier_config mcc="311" mnc="180" cid="1187">
         <!-- AT&T: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="311" mnc="180" cid="2525">
+        <!-- Boost: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="311" mnc="180" cid="2526">
+        <!-- Gen Mobile: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="311" mnc="180" cid="2527">
+        <!-- Republic: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="311" mnc="180" cid="2534">
+        <!-- Boost: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="311" mnc="180" cid="2538">
+        <!-- Home: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="311" mnc="180" cid="2539">
+        <!-- Project Genesis: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="311" mnc="180" cid="2575">
+        <!-- MVNx #T: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="311" mnc="180" cid="2606">
+        <!-- Gen Mobile: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="311" mnc="180" cid="2607">
+        <!-- Boost: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="311" mnc="180" cid="2608">
+        <!-- Boost: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="311" mnc="180" cid="2609">
+        <!-- Republic: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="311" mnc="180" cid="2610">
+        <!-- Ting: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="311" mnc="180" cid="2611">
+        <!-- Ting: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="311" mnc="180" cid="2628">
+        <!-- AT&T Private: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
         <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
     </carrier_config>
     <carrier_config mcc="311" mnc="210">
@@ -3716,6 +3819,62 @@
         <!-- Telstra: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
         <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
     </carrier_config>
+    <carrier_config mcc="505" mnc="01" cid="2129">
+        <!-- ALDI mobile: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="505" mnc="01" cid="2499">
+        <!-- Belong: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="505" mnc="01" cid="2500">
+        <!-- Telechoice: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="505" mnc="01" cid="2501">
+        <!-- Woolworths: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="505" mnc="01" cid="2502">
+        <!-- NuMobile: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="505" mnc="01" cid="2503">
+        <!-- Boost: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="505" mnc="01" cid="2540">
+        <!-- mate.: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="505" mnc="01" cid="2541">
+        <!-- Exetel: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="505" mnc="01" cid="2542">
+        <!-- Konec: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="505" mnc="01" cid="2543">
+        <!-- More: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="505" mnc="01" cid="2544">
+        <!-- TANGERINE: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="505" mnc="01" cid="2545">
+        <!-- Your provider: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="505" mnc="01" cid="2572">
+        <!-- Southern: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="505" mnc="01" cid="2573">
+        <!-- Everyday: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
     <carrier_config mcc="505" mnc="02">
         <!-- google:optus_au -->
         <boolean name="carrier_volte_available_bool" value="true" />
@@ -3723,6 +3882,10 @@
     </carrier_config>
     <carrier_config mcc="505" mnc="02" cid="30">
         <!-- Optus: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
+        <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    </carrier_config>
+    <carrier_config mcc="505" mnc="02" cid="2145">
+        <!-- Virgin: AOSP CarrierConfig enables UT, no XCAP APN: SS stays on CS -->
         <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
     </carrier_config>
     <carrier_config mcc="505" mnc="03">
