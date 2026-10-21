@@ -119,6 +119,9 @@ vendor.sec.rild.libpath=/vendor/lib64/libsec-ril.so
 
 ## Power HAL
 vendor.powerhal.disp.idle_support=false
+# Extra LAUNCH/INTERACTION boosts of the Performance profile; must default to
+# false (libperfmgr treats an unset EnableProperty as true). perf-profile flips it.
+vendor.powerhal.profile.performance=false
 
 ## NFC
 ro.camera.notify_nfc=1

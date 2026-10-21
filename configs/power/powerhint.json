@@ -40,6 +40,7 @@
       "Values": [
         "9999999",
         "1768000",
+        "2184000",
         "2704000",
         "2912000"
       ],
@@ -177,6 +178,21 @@
         "130000"
       ],
       "ResetOnInit": true
+    },
+    {
+      "Name": "GPUMaxFreq",
+      "Path": "/sys/kernel/gpu/gpu_max_clock",
+      "Values": [
+        "494000",
+        "585000",
+        "0"
+      ],
+      "Comments": [
+        "Only written while a performance profile caps the GPU",
+        "0 => Release the max clock lock"
+      ],
+      "DefaultIndex": 2,
+      "ResetOnInit": false
     },
     {
       "Name": "GPUPowerPolicy",
@@ -456,6 +472,64 @@
       "Node": "DoubleTapToWakeEnable",
       "Duration": 0,
       "Value": "aot_enable,1"
+    },
+    {
+      "PowerHint": "PROFILE_POWER_SAVE",
+      "Node": "CPUMaxFreq",
+      "Duration": 0,
+      "Value": "1768000"
+    },
+    {
+      "PowerHint": "PROFILE_POWER_SAVE",
+      "Node": "GPUMaxFreq",
+      "Duration": 0,
+      "Value": "494000"
+    },
+    {
+      "PowerHint": "PROFILE_EFFICIENCY",
+      "Node": "CPUMaxFreq",
+      "Duration": 0,
+      "Value": "2184000"
+    },
+    {
+      "PowerHint": "PROFILE_EFFICIENCY",
+      "Node": "GPUMaxFreq",
+      "Duration": 0,
+      "Value": "585000"
+    },
+    {
+      "PowerHint": "LAUNCH",
+      "Type": "DoHint",
+      "Value": "PROFILE_PERFORMANCE_LAUNCH",
+      "EnableProperty": "vendor.powerhal.profile.performance"
+    },
+    {
+      "PowerHint": "INTERACTION",
+      "Type": "DoHint",
+      "Value": "PROFILE_PERFORMANCE_INTERACTION",
+      "EnableProperty": "vendor.powerhal.profile.performance"
+    },
+    {
+      "PowerHint": "LOW_POWER",
+      "Type": "MaskHint",
+      "Value": "PROFILE_PERFORMANCE_LAUNCH"
+    },
+    {
+      "PowerHint": "LOW_POWER",
+      "Type": "MaskHint",
+      "Value": "PROFILE_PERFORMANCE_INTERACTION"
+    },
+    {
+      "PowerHint": "PROFILE_PERFORMANCE_LAUNCH",
+      "Node": "CPUMinFreq",
+      "Duration": 2000,
+      "Value": "1976000"
+    },
+    {
+      "PowerHint": "PROFILE_PERFORMANCE_INTERACTION",
+      "Node": "CPUMinFreq",
+      "Duration": 1400,
+      "Value": "1976000"
     }
   ]
 }

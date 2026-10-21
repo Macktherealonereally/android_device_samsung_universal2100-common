@@ -89,3 +89,33 @@ See https://www.kernel.org/doc/Documentation/power/pm_qos_interface.txt
     312000 -> 0x00004c2c0
     221000 -> 0x000035f48
     130000 -> 0x00001fbd0
+
+# Performance profiles
+
+Settings > Battery > Performance profile (app `PerfProfiles`, also a Quick
+Settings tile) stores the choice in `persist.sys.perf_profile`; init then
+runs `/vendor/bin/perf-profile`, which applies it to this power HAL through the
+Pixel power extension (`IPowerExt::setMode`). Numbering follows the old
+LineageOS PerformanceManager.
+
+| Value | Profile | What it does |
+|-------|---------|--------------|
+| 0 | Power save | `PROFILE_POWER_SAVE`: ufc max limit 1768000, GPU max 494000 |
+| 1 | Balanced (default) | nothing; identical to the config without profiles |
+| 2 | Performance | `vendor.powerhal.profile.performance=true`: LAUNCH adds a 1976000 ufc min limit for 2 s, INTERACTION one for 1.4 s |
+| 3 | Efficiency | `PROFILE_EFFICIENCY`: ufc max limit 2184000, GPU max 585000 |
+
+The ufc limits are "virtual" frequencies looked up in the exynos-ufcc tables of
+the DT (columns: X1, A78, A55):
+
+    max 2184000 -> 2184000 / 2184000 / 1794000
+    max 1768000 -> 1768000 / 1768000 / 1690000
+    min 1976000 -> 1976000 / 1976000 / 1170000
+
+Boosts can't undo the caps: libperfmgr writes the value of the highest-priority
+(lowest-index) active request, and the cap values sit above the boost values in
+CPUMaxFreq (`1768000` > `2184000` > `2704000` CAMERA_LAUNCH > `2912000` LAUNCH);
+min limits never exceed max limits in the kernel (the max wins). LOW_POWER
+(Battery Saver) keeps its 1768000 cap in every profile and masks the extra
+Performance boosts. GPUMaxFreq is only written while a capping profile is
+active (`ResetOnInit: false`), so in Balanced gpu_max_clock is left alone.
