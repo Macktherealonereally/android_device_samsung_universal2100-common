@@ -13,4 +13,5 @@
     <string name="switching">Switching SIM 2…</string>
     <string name="switch_done">SIM 2 switched</string>
     <string name="switch_failed">Could not switch SIM 2</string>
+    <string name="switch_pending">SIM 2 is already switching, try again shortly</string>
 </resources>

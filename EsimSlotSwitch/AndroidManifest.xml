@@ -4,11 +4,12 @@
      SPDX-License-Identifier: Apache-2.0
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.lineageos.esimslot"
-    android:sharedUserId="android.uid.system">
+    package="org.lineageos.esimslot">
+
+    <!-- Platform-signed system app (platform_app domain): MODIFY_PHONE_STATE and
+         READ_PRIVILEGED_PHONE_STATE are granted by signature; no shared uid needed. -->
 
     <uses-permission android:name="android.permission.MODIFY_PHONE_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
@@ -34,11 +35,14 @@
                 android:resource="@string/tile_summary" />
         </activity>
 
-        <!-- SIM_CARD_STATE_CHANGED is sent with READ_PRIVILEGED_PHONE_STATE, a
-             signature permission, so it reaches manifest receivers. -->
+        <!-- SIM_CARD_STATE_CHANGED reaches manifest receivers because it is on the
+             platform's allow-implicit-broadcast list (framework-sysconfig.xml). Its
+             senders (phone, system) hold READ_PRIVILEGED_PHONE_STATE; other apps cannot
+             poke the receiver. -->
         <receiver
             android:name=".RestoreReceiver"
-            android:exported="true">
+            android:exported="true"
+            android:permission="android.permission.READ_PRIVILEGED_PHONE_STATE">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.telephony.action.SIM_CARD_STATE_CHANGED" />

@@ -30,6 +30,11 @@ public class SlotSwitchActivity extends Activity {
             finish();
             return;
         }
+        if (Mux.isBusy()) {
+            Toast.makeText(this, R.string.switch_pending, Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
         int current = Mux.isOnEuicc() ? 1 : (Mux.isOnTray() ? 0 : -1);
         CharSequence[] choices = {getText(R.string.choice_psim), getText(R.string.choice_esim)};
@@ -49,22 +54,23 @@ public class SlotSwitchActivity extends Activity {
     }
 
     private void select(boolean euicc) {
+        // Also kept by the app, in case the shim could not record the choice.
+        RestoreJobService.onUserChoice(this, euicc);
         Toast.makeText(this, R.string.switching, Toast.LENGTH_SHORT).show();
         // The request blocks until the RIL answers (a few seconds); don't hold the screen.
         final Context app = getApplicationContext();
         final Handler main = new Handler(Looper.getMainLooper());
         finish();
         new Thread(() -> {
-            boolean ok;
+            int msg;
             try {
-                Mux.select(app, euicc);
-                ok = true;
+                msg = Mux.trySelect(app, euicc) ? R.string.switch_done : R.string.switch_pending;
             } catch (RuntimeException e) {
                 Log.e(Mux.TAG, "switch to " + (euicc ? "eUICC" : "tray 2") + " failed", e);
-                ok = false;
+                msg = R.string.switch_failed;
             }
-            final int msg = ok ? R.string.switch_done : R.string.switch_failed;
-            main.post(() -> Toast.makeText(app, msg, Toast.LENGTH_SHORT).show());
+            final int text = msg;
+            main.post(() -> Toast.makeText(app, text, Toast.LENGTH_SHORT).show());
         }).start();
     }
 }
