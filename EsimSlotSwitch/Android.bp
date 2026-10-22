@@ -1,0 +1,18 @@
+//
+// SPDX-FileCopyrightText: The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// SIM 2 / eSIM selection for the tsds2 mux (SIM tray 2 and the eUICC share the
+// second SIM interface): a Settings entry to switch, and a check that puts the
+// mux back on the eUICC when the modem falls back to an empty SIM tray 2.
+android_app {
+    name: "EsimSlotSwitch",
+
+    srcs: ["src/**/*.java"],
+    resource_dirs: ["res"],
+
+    certificate: "platform",
+    platform_apis: true,
+    system_ext_specific: true,
+}

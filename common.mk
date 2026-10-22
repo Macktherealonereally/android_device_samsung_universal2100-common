@@ -324,6 +324,10 @@ PRODUCT_PACKAGES += \
     sehradiomanager.conf.exynos2100 \
     sehradiomanager
 
+# SIM 2 / eSIM (tsds2 mux) switch and restore; does nothing without tsds2
+PRODUCT_PACKAGES += \
+    EsimSlotSwitch
+
 $(call soong_config_set,cbd,protocol,sipc)
 
 PRODUCT_PACKAGES += \

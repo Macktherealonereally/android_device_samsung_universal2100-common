@@ -62,6 +62,13 @@ constexpr int kTargetPsim = 1;
 constexpr int kTargetEsim = 2;
 constexpr int kActionStartSwitch = 0x21;
 
+// The last SIM2/eSIM choice requested through setSimSlotMapping ("esim" or
+// "psim"). Every switch passes through here, so this is where the user's
+// intent is known. EsimSlotSwitch reads it to put the mux back on the eUICC
+// when the modem falls back to an empty SIM tray 2. persist.ril.esim.* is
+// radio_prop (sepolicy/private/property_contexts), which rild may set.
+constexpr char kUserTargetProp[] = "persist.ril.esim.user_target";
+
 using DoSetSlotMappingFn = int (*)(void*, void*);
 using ExecuteSlotSwitchFn = void (*)(void*, void*, int);
 
@@ -181,6 +188,9 @@ extern "C" __attribute__((visibility("default"))) int _ZN10SimManager16DoSetSlot
     }
     ALOGI("using SimManager %p (slot field %d) instead of caller %p (slot field %d)", mgr,
           *at<int>(mgr, kSimManagerSlotOffset), self, *at<int>(self, kSimManagerSlotOffset));
+    if (__system_property_set(kUserTargetProp, target == kTargetEsim ? "esim" : "psim") != 0) {
+        ALOGW("could not set %s", kUserTargetProp);
+    }
     *at<int>(mgr, kSimManagerTargetOffset) = target;
     gExecuteSlotSwitch(mgr, request, kActionStartSwitch);
     return 0;

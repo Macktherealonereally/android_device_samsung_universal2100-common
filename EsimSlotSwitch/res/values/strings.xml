@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <string name="app_name">SIM 2 slot</string>
+    <string name="tile_title">SIM 2 slot</string>
+    <string name="tile_summary">Use SIM card tray 2 or the built-in eSIM</string>
+    <string name="choice_psim">SIM card in tray 2</string>
+    <string name="choice_esim">Built-in eSIM</string>
+    <string name="not_supported">Not available on this device</string>
+    <string name="switching">Switching SIM 2…</string>
+    <string name="switch_done">SIM 2 switched</string>
+    <string name="switch_failed">Could not switch SIM 2</string>
+</resources>
