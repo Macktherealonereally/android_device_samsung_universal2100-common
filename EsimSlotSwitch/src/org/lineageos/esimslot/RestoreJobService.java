@@ -27,7 +27,8 @@ import android.util.Log;
  * <ul>
  *   <li>the last switch requested through the shim was "esim" (or, when nothing was switched
  *       since the last data wipe, the mux was last seen on the eUICC);</li>
- *   <li>no SIM card was seen in use in tray 2 since the eUICC was last selected. A tray-2
+ *   <li>no SIM card was seen in use in tray 2 since the eUICC was last selected (a card
+ *       state such as READY or PIN_REQUIRED on two checks at least 10 s apart). A tray-2
  *       card always wins: once one is seen, nothing is restored until the eUICC is selected
  *       again (by the user, or by whatever else switches the mux), even if the card is
  *       removed later or is slow to come back after a modem restart;</li>
@@ -49,6 +50,7 @@ public class RestoreJobService extends JobService {
     private static final long IN_CALL_RECHECK_MS = 60_000;
     private static final long RADIO_OFF_RECHECK_MS = 120_000;
     private static final long MIN_GAP_MS = 60_000;
+    private static final long TRAY_CONFIRM_MS = 10_000;
     private static final int MAX_RESTORES_PER_BOOT = 3;
 
     private static final String PREF_BOOT = "boot_count";
@@ -56,6 +58,7 @@ public class RestoreJobService extends JobService {
     private static final String PREF_RESTORES = "restores";
     private static final String PREF_SEEN_EUICC = "seen_euicc";
     private static final String PREF_TRAY_IN_USE = "tray_in_use";
+    private static final String PREF_TRAY_SEEN_AT = "tray_seen_at";
 
     static void schedule(Context context, long delayMs) {
         JobInfo job = new JobInfo.Builder(JOB_ID,
@@ -79,6 +82,8 @@ public class RestoreJobService extends JobService {
     /** An explicit choice in the Settings entry. */
     static void onUserChoice(Context context, boolean euicc) {
         prefs(context).edit().putBoolean(PREF_TRAY_IN_USE, !euicc).apply();
+        Log.i(Mux.TAG, "Settings choice " + (euicc ? "eUICC" : "tray 2") + "; tray_in_use="
+                + !euicc);
     }
 
     private static SharedPreferences prefs(Context context) {
@@ -115,7 +120,10 @@ public class RestoreJobService extends JobService {
         int boot = Settings.Global.getInt(getContentResolver(), Settings.Global.BOOT_COUNT, 0);
         if (p.getInt(PREF_BOOT, -1) != boot) {
             p.edit().putInt(PREF_BOOT, boot).putLong(PREF_LAST_EVENT, now)
-                    .remove(PREF_RESTORES).apply();
+                    .remove(PREF_RESTORES).remove(PREF_TRAY_SEEN_AT).apply();
+            Log.i(Mux.TAG, "boot " + boot + ": user target '" + Mux.userTarget()
+                    + "', tray_in_use=" + p.getBoolean(PREF_TRAY_IN_USE, false)
+                    + ", seen_euicc=" + p.getBoolean(PREF_SEEN_EUICC, false));
         }
 
         TelephonyManager tm = getSystemService(TelephonyManager.class);
@@ -124,19 +132,36 @@ public class RestoreJobService extends JobService {
 
         if (Mux.isOnEuicc()) {
             // Selected again since any tray-2 card was seen: the eSIM choice is armed.
+            if (p.getBoolean(PREF_TRAY_IN_USE, false)) {
+                Log.i(Mux.TAG, "eUICC selected; tray_in_use=false");
+            }
             p.edit().putBoolean(PREF_SEEN_EUICC, true).putBoolean(PREF_TRAY_IN_USE, false)
-                    .apply();
+                    .remove(PREF_TRAY_SEEN_AT).apply();
             return;
         }
-        if (Mux.isOnTray() && isCardSeen(muxSimState)) {
+        if (Mux.isOnTray() && isRealCard(muxSimState)) {
+            // Right after a fallback, telephony can still report the eUICC's old state for
+            // logical slot 1; only a card seen on two checks counts as a tray-2 card.
+            long seenAt = p.getLong(PREF_TRAY_SEEN_AT, 0);
+            if (seenAt <= 0 || seenAt > now) {
+                p.edit().putLong(PREF_TRAY_SEEN_AT, now).apply();
+                schedule(this, TRAY_CONFIRM_MS + 5_000);
+                return;
+            }
+            if (now - seenAt < TRAY_CONFIRM_MS) {
+                schedule(this, TRAY_CONFIRM_MS - (now - seenAt) + 5_000);
+                return;
+            }
             if (!p.getBoolean(PREF_TRAY_IN_USE, false)) {
-                Log.i(Mux.TAG, "SIM card in tray 2 in use; not restoring the eUICC until it"
-                        + " is selected again");
+                Log.i(Mux.TAG, "SIM card in tray 2 in use (state " + muxSimState
+                        + "); tray_in_use=true, not restoring the eUICC until it is selected"
+                        + " again");
             }
             p.edit().putBoolean(PREF_TRAY_IN_USE, true).putBoolean(PREF_SEEN_EUICC, false)
                     .apply();
             return;
         }
+        p.edit().remove(PREF_TRAY_SEEN_AT).apply();
 
         boolean wantEuicc = ("esim".equals(target)
                 || (target.isEmpty() && p.getBoolean(PREF_SEEN_EUICC, false)))
@@ -186,6 +211,7 @@ public class RestoreJobService extends JobService {
             }
             return;
         }
+        // Counted before the request, so a crash mid-switch still counts.
         p.edit().putInt(PREF_RESTORES, restores + 1).putLong(PREF_LAST_EVENT, now).apply();
 
         Log.i(Mux.TAG, "SIM tray 2 is empty and the eUICC is not selected (user target '"
@@ -193,6 +219,8 @@ public class RestoreJobService extends JobService {
                 + MAX_RESTORES_PER_BOOT + " in this boot");
         try {
             if (!Mux.trySelect(this, true)) {
+                // Nothing was sent: give the restore back.
+                p.edit().putInt(PREF_RESTORES, restores).apply();
                 Log.i(Mux.TAG, "another switch is pending; checking again later");
             }
         } catch (RuntimeException e) {
@@ -201,10 +229,21 @@ public class RestoreJobService extends JobService {
         schedule(this, VERIFY_MS);
     }
 
-    /** A card that is there but maybe not usable yet: anything but absent or unknown. */
-    private static boolean isCardSeen(int simState) {
-        return simState != TelephonyManager.SIM_STATE_ABSENT
-                && simState != TelephonyManager.SIM_STATE_UNKNOWN
-                && simState != TelephonyManager.SIM_STATE_NOT_READY;
+    /**
+     * States only a real card gives. Error states (CARD_IO_ERROR, CARD_RESTRICTED) and
+     * transitional ones (UNKNOWN, NOT_READY) can come from an empty interface and don't count.
+     */
+    private static boolean isRealCard(int simState) {
+        switch (simState) {
+            case TelephonyManager.SIM_STATE_READY:
+            case TelephonyManager.SIM_STATE_LOADED:
+            case TelephonyManager.SIM_STATE_PIN_REQUIRED:
+            case TelephonyManager.SIM_STATE_PUK_REQUIRED:
+            case TelephonyManager.SIM_STATE_NETWORK_LOCKED:
+            case TelephonyManager.SIM_STATE_PERM_DISABLED:
+                return true;
+            default:
+                return false;
+        }
     }
 }
