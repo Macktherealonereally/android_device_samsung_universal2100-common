@@ -9,7 +9,11 @@ package org.lineageos.settings.perfprofile;
 import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
 
-/** Quick Settings tile: tap cycles Power save > Efficiency > Balanced > Performance. */
+/**
+ * Quick Settings tile: tap cycles Power save > Efficiency > Balanced > Performance.
+ * On a locked device the tile only shows the current profile; changing it asks
+ * for the unlock first.
+ */
 public class PerfProfileTileService extends TileService {
 
     @Override
@@ -21,6 +25,15 @@ public class PerfProfileTileService extends TileService {
     @Override
     public void onClick() {
         super.onClick();
+        if (isLocked()) {
+            // Runs after the user unlocks; dropped if the bouncer is dismissed.
+            unlockAndRun(this::cycleProfile);
+        } else {
+            cycleProfile();
+        }
+    }
+
+    private void cycleProfile() {
         PerfProfileUtils.set(this, PerfProfileUtils.next(PerfProfileUtils.get()));
         update();
     }
