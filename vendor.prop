@@ -119,7 +119,7 @@ vendor.sec.rild.libpath=/vendor/lib64/libsec-ril.so
 
 ## Power HAL
 vendor.powerhal.disp.idle_support=false
-# Extra LAUNCH/INTERACTION boosts of the Performance profile; must default to
+# Extra LAUNCH/INTERACTION boosts and the GPU floor of the Performance profile; must default to
 # false (libperfmgr treats an unset EnableProperty as true). perf-profile flips it.
 vendor.powerhal.profile.performance=false
 

@@ -87,6 +87,8 @@ genfscon sysfs /devices/platform/exynos-ufcc/ucc/cstate_control_level           
 genfscon sysfs /devices/platform/exynos-ufcc/ufc/cpufreq_max_limit                           u:object_r:sysfs_power_writable:s0
 genfscon sysfs /devices/platform/exynos-ufcc/ufc/cpufreq_min_limit                           u:object_r:sysfs_power_writable:s0
 genfscon sysfs /devices/platform/18500000.mali/power_policy                                  u:object_r:sysfs_power_writable:s0
+genfscon sysfs /devices/platform/18500000.mali/highspeed_clock                               u:object_r:sysfs_power_writable:s0
+genfscon sysfs /devices/platform/18500000.mali/highspeed_load                                u:object_r:sysfs_power_writable:s0
 genfscon sysfs /devices/platform/17000010.devfreq_mif/devfreq/17000010.devfreq_mif/scaling_devfreq_min  u:object_r:sysfs_power_writable:s0
 
 # mem_boost

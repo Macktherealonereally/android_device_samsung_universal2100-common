@@ -102,7 +102,7 @@ LineageOS PerformanceManager.
 |-------|---------|--------------|
 | 0 | Power save | `PROFILE_POWER_SAVE`: ufc max limit 1768000, GPU max 494000 |
 | 1 | Balanced (default) | nothing; identical to the config without profiles |
-| 2 | Performance | `vendor.powerhal.profile.performance=true`: LAUNCH adds a 1976000 ufc min limit for 2 s, INTERACTION one for 1.4 s |
+| 2 | Performance | `PROFILE_PERFORMANCE`: GPU governor highspeed_clock 585000 / highspeed_load 2 (DT: 403000 / 94); `vendor.powerhal.profile.performance=true`: LAUNCH adds a 1976000 ufc min limit for 2 s, INTERACTION one for 1.4 s, and screen on/touch/launch start `PROFILE_PERFORMANCE_GPU` (gpu_min_clock 403000 until screen off) |
 | 3 | Efficiency | `PROFILE_EFFICIENCY`: ufc max limit 2184000, GPU max 585000 |
 
 The ufc limits are "virtual" frequencies looked up in the exynos-ufcc tables of
@@ -127,3 +127,22 @@ as the max limit, which would lift the profile caps. Today only init chowns it.
 The power HAL (uid root, group system, no dac_override) must be able to write
 `/sys/kernel/gpu/gpu_max_clock` after boot: init.samsung.rc makes it
 system:system 0664 (like gpu_min_clock) at boot_completed.
+
+## Performance: GPU ramp-up
+
+The Exynos "interactive" GPU governor (gpu_dvfs_governor.c) polls every 30 ms
+(DT gpu_dvfs_polling_time) and only moves up when the utilisation is above the
+current step's max_threshold (85-100 % in the DT dvfs table). It then goes up one
+step, or straight to `highspeed_clock` when the load is also above
+`highspeed_load` (DT interactive_info: 403000 / 94). Because max_threshold is
+>= 85 %, any highspeed_load <= 85 means "always jump when saturated"; 2 is used.
+
+Performance therefore sets highspeed_clock 585000 / highspeed_load 2 (a
+saturated GPU goes to 585 MHz in one 30 ms poll instead of climbing 130 -> 221
+-> 312 -> 403 -> 494 -> 585) and a gpu_min_clock floor of 403000 that skips the
+three lowest steps while the screen is on. The floor (`PROFILE_PERFORMANCE_GPU`)
+only applies while the GPU is powered, ends on DISPLAY_INACTIVE and is
+restarted by INTERACTIVE/INTERACTION/LAUNCH. EXPENSIVE_RENDERING's 494000 still
+outranks it. LOW_POWER (Battery Saver) masks and ends the floor and requests the
+DT highspeed values with a higher priority, so Battery Saver wins. In every
+other profile the highspeed nodes are never written (`ResetOnInit: false`).

@@ -12,9 +12,10 @@
 //   0 = power save, 1 = balanced (default), 2 = performance, 3 = efficiency.
 //
 // Power save and efficiency are long-running power HAL hints whose CPU/GPU caps
-// outrank the boost hints in powerhint.json. Performance only flips
-// vendor.powerhal.profile.performance, which enables the extra LAUNCH and
-// INTERACTION boosts in powerhint.json. Balanced turns everything off.
+// outrank the boost hints in powerhint.json. Performance is a long-running hint
+// too (faster GPU ramp-up) and flips vendor.powerhal.profile.performance, which
+// enables the extra LAUNCH/INTERACTION boosts and the screen-on GPU floor
+// (PROFILE_PERFORMANCE_GPU) in powerhint.json. Balanced turns everything off.
 
 #include <aidl/google/hardware/power/extension/pixel/IPowerExt.h>
 #include <android-base/logging.h>
@@ -45,10 +46,15 @@ struct ProfileHint {
     const char* hint;
 };
 
-constexpr std::array<ProfileHint, 2> kProfileHints = {{
+constexpr std::array<ProfileHint, 3> kProfileHints = {{
         {kPowerSave, "PROFILE_POWER_SAVE"},
         {kEfficiency, "PROFILE_EFFICIENCY"},
+        {kPerformance, "PROFILE_PERFORMANCE"},
 }};
+
+// Started by PROFILE_PERFORMANCE and by screen-on/touch/launch hints while the
+// performance property is set; ending PROFILE_PERFORMANCE doesn't end it.
+constexpr char kPerformanceGpuHint[] = "PROFILE_PERFORMANCE_GPU";
 
 const char* ProfileName(int profile) {
     switch (profile) {
@@ -109,6 +115,9 @@ bool Apply(const std::shared_ptr<IPowerExt>& ext, int profile) {
     for (const auto& p : kProfileHints) {
         if (p.profile == profile) continue;
         ok = ext->setMode(p.hint, false).isOk() && ok;
+    }
+    if (profile != kPerformance) {
+        ok = ext->setMode(kPerformanceGpuHint, false).isOk() && ok;
     }
 
     return ok;

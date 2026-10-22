@@ -15,7 +15,7 @@
     <string name="perf_profile_balanced">Balanced</string>
     <string name="perf_profile_balanced_summary">Default. No extra limits.</string>
     <string name="perf_profile_performance">Performance</string>
-    <string name="perf_profile_performance_summary">Stronger boosts when you touch the screen and open apps. Uses more battery.</string>
+    <string name="perf_profile_performance_summary">Stronger boosts when you touch the screen and open apps, and a GPU that skips its lowest clocks and ramps up faster while the screen is on. Uses more battery.</string>
 
     <string name="perf_profile_footer">Battery Saver still limits the CPU to 1.77 GHz and turns the extra Performance boosts off. Touch and app-launch boosts never go above the limits of the selected profile.</string>
 </resources>

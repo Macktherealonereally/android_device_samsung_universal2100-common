@@ -174,6 +174,7 @@
       "Path": "/sys/kernel/gpu/gpu_min_clock",
       "Values": [
         "494000",
+        "403000",
         "312000",
         "130000"
       ],
@@ -192,6 +193,34 @@
         "0 => Release the max clock lock"
       ],
       "DefaultIndex": 2,
+      "ResetOnInit": false
+    },
+    {
+      "Name": "GPUHighspeedClock",
+      "Path": "/sys/devices/platform/18500000.mali/highspeed_clock",
+      "Values": [
+        "403000",
+        "585000"
+      ],
+      "Comments": [
+        "Interactive governor jump target when a step is saturated",
+        "403000 => DT default (interactive_info), only written while Performance is active"
+      ],
+      "DefaultIndex": 0,
+      "ResetOnInit": false
+    },
+    {
+      "Name": "GPUHighspeedLoad",
+      "Path": "/sys/devices/platform/18500000.mali/highspeed_load",
+      "Values": [
+        "94",
+        "2"
+      ],
+      "Comments": [
+        "Load above which a saturated step jumps to highspeed_clock",
+        "94 => DT default (interactive_info), only written while Performance is active"
+      ],
+      "DefaultIndex": 0,
       "ResetOnInit": false
     },
     {
@@ -530,6 +559,74 @@
       "Node": "CPUMinFreq",
       "Duration": 1400,
       "Value": "1976000"
+    },
+    {
+      "PowerHint": "PROFILE_PERFORMANCE",
+      "Node": "GPUHighspeedClock",
+      "Duration": 0,
+      "Value": "585000"
+    },
+    {
+      "PowerHint": "PROFILE_PERFORMANCE",
+      "Node": "GPUHighspeedLoad",
+      "Duration": 0,
+      "Value": "2"
+    },
+    {
+      "PowerHint": "PROFILE_PERFORMANCE",
+      "Type": "DoHint",
+      "Value": "PROFILE_PERFORMANCE_GPU"
+    },
+    {
+      "PowerHint": "INTERACTIVE",
+      "Type": "DoHint",
+      "Value": "PROFILE_PERFORMANCE_GPU",
+      "EnableProperty": "vendor.powerhal.profile.performance"
+    },
+    {
+      "PowerHint": "INTERACTION",
+      "Type": "DoHint",
+      "Value": "PROFILE_PERFORMANCE_GPU",
+      "EnableProperty": "vendor.powerhal.profile.performance"
+    },
+    {
+      "PowerHint": "LAUNCH",
+      "Type": "DoHint",
+      "Value": "PROFILE_PERFORMANCE_GPU",
+      "EnableProperty": "vendor.powerhal.profile.performance"
+    },
+    {
+      "PowerHint": "DISPLAY_INACTIVE",
+      "Type": "EndHint",
+      "Value": "PROFILE_PERFORMANCE_GPU"
+    },
+    {
+      "PowerHint": "LOW_POWER",
+      "Type": "MaskHint",
+      "Value": "PROFILE_PERFORMANCE_GPU"
+    },
+    {
+      "PowerHint": "LOW_POWER",
+      "Type": "EndHint",
+      "Value": "PROFILE_PERFORMANCE_GPU"
+    },
+    {
+      "PowerHint": "LOW_POWER",
+      "Node": "GPUHighspeedClock",
+      "Duration": 0,
+      "Value": "403000"
+    },
+    {
+      "PowerHint": "LOW_POWER",
+      "Node": "GPUHighspeedLoad",
+      "Duration": 0,
+      "Value": "94"
+    },
+    {
+      "PowerHint": "PROFILE_PERFORMANCE_GPU",
+      "Node": "GPUMinFreq",
+      "Duration": 0,
+      "Value": "403000"
     }
   ]
 }
