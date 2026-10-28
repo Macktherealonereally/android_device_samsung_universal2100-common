@@ -153,6 +153,11 @@
          states. -->
     <bool name="config_dozeAlwaysOnDisplayAvailable">true</bool>
 
+    <!-- Always on display is off by default: while it shows, the display controller (decon)
+         holds a wakelock and the SoC never suspends (~3%/h standby vs ~0.6%/h with it off).
+         Users can still turn it on in Settings. -->
+    <bool name="config_dozeAlwaysOnEnabled">false</bool>
+
     <!-- Doze: should the TYPE_PICK_UP_GESTURE sensor be used as a pulse signal. -->
     <bool name="config_dozePulsePickup">true</bool>
 
