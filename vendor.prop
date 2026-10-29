@@ -37,9 +37,6 @@ ro.camera.disableJpegR=true
 ## FRP
 ro.frp.pst=/dev/block/persistent
 
-## FUSE passthrough
-persist.sys.fuse.passthrough.enable=true
-
 ## Hermesd
 vendor.securehw.available=false
 vendor.securenvm.available=false

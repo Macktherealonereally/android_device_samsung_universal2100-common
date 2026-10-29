@@ -1,2 +1,7 @@
 # BPF
 ro.bpf.kver_override=5.10.239
+
+# FUSE passthrough
+# persist.sys.* is system_prop, which vendor_init may not set, so this
+# must not live in vendor.prop (it was silently dropped there).
+persist.sys.fuse.passthrough.enable=true
